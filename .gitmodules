@@ -1,0 +1,6 @@
+[submodule "Dependencies/FixedMath.Net"]
+	path = Dependencies/FixedMath.Net
+	url = https://github.com/asik/FixedMath.Net.git
+[submodule "Dependencies/Papyrus"]
+	path = Dependencies/Papyrus
+	url = https://github.com/stompyrobot/Papyrus.git
