@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using EmpireSharp.Simulation;
+using EmpireSharp.Windows.GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,22 +25,29 @@ namespace EmpireSharp.Windows
 	/// <summary>
 	/// This is the main type for your game
 	/// </summary>
-	public class EmpireWindows : Game
+	public class EmpireWindows : Microsoft.Xna.Framework.Game
 	{
 
 
-		GraphicsDeviceManager graphics;
-		SpriteBatch spriteBatch;
+		private GraphicsDeviceManager _graphics;
 
-		private Simulation.Root _simulation;
+		public SpriteBatch SpriteBatch { get; private set; }
 
-		private Texture2D _white;
+		public Texture2D WhitePixelTex;
+
+		internal GameStates.GameStateMain MainGameState { get; set; }
 
 		public EmpireWindows()
 			: base()
 		{
-			graphics = new GraphicsDeviceManager(this);
+
+			_graphics = new GraphicsDeviceManager(this);
+			_graphics.PreferredBackBufferHeight = 720;
+			_graphics.PreferredBackBufferWidth = 1280;
+
+			//Content = new ContentManager(Services);
 			Content.RootDirectory = "Content";
+
 		}
 
 		/// <summary>
@@ -50,11 +58,20 @@ namespace EmpireSharp.Windows
 		/// </summary>
 		protected override void Initialize()
 		{
-			
-			_simulation = new Root();
-			_simulation.Init();
 
 			base.Initialize();
+
+			SpriteBatch = new SpriteBatch(GraphicsDevice);
+
+			IsMouseVisible = true;
+
+			this.Window.Title = "EmpireSharp";
+
+			MainGameState = new GameStateMain(this);
+
+			WhitePixelTex = new Texture2D(GraphicsDevice, 1,1);
+			WhitePixelTex.SetData(new Color[] {Color.White});
+			
 		}
 
 		/// <summary>
@@ -63,13 +80,9 @@ namespace EmpireSharp.Windows
 		/// </summary>
 		protected override void LoadContent()
 		{
-			// Create a new SpriteBatch, which can be used to draw textures.
-			spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			_white = new Texture2D(GraphicsDevice, 1,1,false, SurfaceFormat.Color);
-			_white.SetData(new Color[1] {Color.White});
+			base.LoadContent();
 
-			// TODO: use this.Content to load your game content here
 		}
 
 		/// <summary>
@@ -78,7 +91,9 @@ namespace EmpireSharp.Windows
 		/// </summary>
 		protected override void UnloadContent()
 		{
-			// TODO: Unload any non ContentManager content here
+
+			base.UnloadContent();
+
 		}
 
 		/// <summary>
@@ -91,8 +106,7 @@ namespace EmpireSharp.Windows
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
 
-
-			_simulation.Tick();
+			MainGameState.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
 			base.Update(gameTime);
 		}
@@ -103,23 +117,10 @@ namespace EmpireSharp.Windows
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(Color.CornflowerBlue);
 
-			// TODO: Add your drawing code here
-
-			var entities = _simulation.EntityContainer.Entities;
-
-			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-
-			foreach (var baseEntity in entities) {
-				
-				spriteBatch.Draw(_white, new Rectangle((int)baseEntity.Transform.Position.X-1, (int)baseEntity.Transform.Position.Y - 1, 2, 2), new Rectangle(0,0,1,1), Color.Red);
-
-			}
-
-			spriteBatch.End();
-
+			MainGameState.Draw();
 			base.Draw(gameTime);
+
 		}
 	}
 }
