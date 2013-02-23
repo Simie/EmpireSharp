@@ -42,6 +42,8 @@
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Entities\Unit.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="FixedMathHelper.cs" />
+    <Compile Include="FixedVector2.cs" />
     <Compile Include="Terrain.cs" />
     <Compile Include="Root.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -50,6 +52,12 @@
     <None Include="..\License.licenseheader">
       <Link>License.licenseheader</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dependencies\FixedMath.Net\FixedMath.NET.csproj">
+      <Project>{d46c606e-5826-465f-9983-251e3d3b2f1c}</Project>
+      <Name>FixedMath.NET</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
