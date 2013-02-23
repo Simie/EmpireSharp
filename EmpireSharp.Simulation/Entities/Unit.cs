@@ -14,8 +14,27 @@ namespace EmpireSharp.Simulation.Entities
 	public class Unit : BaseEntity
 	{
 
+		/// <summary>
+		/// Will this entity block other entities movement
+		/// </summary>
+		public bool IsCollider { get; set; }
+
+		/// <summary>
+		/// Size of the collision circle around this entity
+		/// </summary>
+		public float CollisionRadius { get; set; }
+
 		[Inject]
-		private readonly Terrain _terrain;
+		protected Terrain Terrain { get; set; }
+
+		public override void Tick()
+		{
+
+			base.Tick();
+
+			Transform.Position += FixedVector2.One * Time.TimeStep;
+
+		}
 
 	}
 

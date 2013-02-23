@@ -6,6 +6,7 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
+using Ninject;
 
 namespace EmpireSharp.Simulation.Entities
 {
@@ -17,19 +18,12 @@ namespace EmpireSharp.Simulation.Entities
 	{
 
 		/// <summary>
-		/// Will this entity block other entities movement
-		/// </summary>
-		public bool IsCollider { get; set; }
-
-		/// <summary>
-		/// Size of the collision circle around this entity
-		/// </summary>
-		public float CollisionRadius { get; set; }
-
-		/// <summary>
 		/// Entity transform (position, rotation)
 		/// </summary>
 		public Transform Transform;
+
+		[Inject]
+		protected Time Time { get; private set; }
 
 		public virtual void Tick() {}
 

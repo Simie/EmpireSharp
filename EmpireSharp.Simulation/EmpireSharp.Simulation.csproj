@@ -51,6 +51,7 @@
     <Compile Include="Terrain.cs" />
     <Compile Include="Root.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Transform.cs" />
   </ItemGroup>
   <ItemGroup>

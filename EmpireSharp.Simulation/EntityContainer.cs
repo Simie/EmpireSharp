@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EmpireSharp.Simulation.Entities;
+using Ninject;
 
 namespace EmpireSharp.Simulation
 {
@@ -16,15 +17,35 @@ namespace EmpireSharp.Simulation
 
 		private List<Entities.BaseEntity> _internalList;
 
+		[Inject]
+		public IKernel Kernel { get; private set; }
+
 		public EntityContainer()
 		{
 			_internalList = new List<BaseEntity>(1024);
 		}
 
+		public T CreateEntity<T>(FixedVector2? initialPosition = null) where T : Entities.BaseEntity, new()
+		{
+
+			var entity = new T();
+
+			Kernel.Inject(entity);
+
+			if(initialPosition.HasValue)
+				entity.Transform.Position = initialPosition.Value;
+
+			_internalList.Add(entity);
+
+			return entity;
+
+		}
+
 		internal void Tick()
 		{
 
-			for (int i = 0; i < _internalList.Count; i++) {
+			// Reverse loop in case entities are added during the tick.
+			for (int i = _internalList.Count-1; i >= 0; --i) {
 				_internalList[i].Tick();
 			}
 
