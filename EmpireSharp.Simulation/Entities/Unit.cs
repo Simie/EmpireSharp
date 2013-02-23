@@ -6,11 +6,7 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Ninject;
 
 namespace EmpireSharp.Simulation.Entities
 {
@@ -18,7 +14,8 @@ namespace EmpireSharp.Simulation.Entities
 	public class Unit : BaseEntity
 	{
 
-
+		[Inject]
+		private readonly Terrain _terrain;
 
 	}
 

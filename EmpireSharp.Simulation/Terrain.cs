@@ -40,11 +40,16 @@ namespace EmpireSharp.Simulation
 		/// </summary>
 		public int Size { get; private set; }
 
-		public Terrain(int size)
+		public Terrain()
+		{
+
+		}
+
+		public void Init(int size)
 		{
 
 			Size = size;
-			_tileMap = new Tile[Size,Size];
+			_tileMap = new Tile[Size, Size];
 
 		}
 

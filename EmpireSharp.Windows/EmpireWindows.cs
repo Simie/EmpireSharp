@@ -10,6 +10,7 @@
 #region Using Statements
 using System;
 using System.Collections.Generic;
+using EmpireSharp.Simulation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,8 +26,12 @@ namespace EmpireSharp.Windows
 	/// </summary>
 	public class EmpireWindows : Game
 	{
+
+
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
+
+		private Simulation.Root _simulation;
 
 		public EmpireWindows()
 			: base()
@@ -43,7 +48,9 @@ namespace EmpireSharp.Windows
 		/// </summary>
 		protected override void Initialize()
 		{
-			// TODO: Add your initialization logic here
+			
+			_simulation = new Root();
+			_simulation.Init();
 
 			base.Initialize();
 		}

@@ -6,6 +6,7 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
+
 namespace EmpireSharp.Simulation.Entities
 {
 
@@ -24,6 +25,13 @@ namespace EmpireSharp.Simulation.Entities
 		/// Size of the collision circle around this entity
 		/// </summary>
 		public float CollisionRadius { get; set; }
+
+		/// <summary>
+		/// Entity transform (position, rotation)
+		/// </summary>
+		public Transform Transform;
+
+		public virtual void Tick() {}
 
 	}
 

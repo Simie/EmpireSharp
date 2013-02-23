@@ -7,6 +7,7 @@
 *
 */
 using System;
+using Ninject;
 
 namespace EmpireSharp.Simulation
 {
@@ -27,9 +28,20 @@ namespace EmpireSharp.Simulation
 		/// </summary>
 		public Terrain Terrain { get; private set; }
 
+		/// <summary>
+		/// Holds all entities in the simulation.
+		/// </summary>
+		public EntityContainer EntityContainer { get; private set; }
+
+		private readonly IKernel _kernel;
+
 		public Root()
 		{
-			
+
+			_kernel = new StandardKernel();
+			_kernel.Bind<Terrain>().To<Terrain>().InSingletonScope();
+			_kernel.Bind<EntityContainer>().To<EntityContainer>().InSingletonScope();
+
 		}
 
 		/// <summary>
@@ -42,9 +54,22 @@ namespace EmpireSharp.Simulation
 			if(IsInitialised)
 				throw new InvalidOperationException("Simulation is already initialised.");
 
-			Terrain = new Terrain(128);
+			Terrain = _kernel.Get<Terrain>();
+			Terrain.Init(128);
+
+			EntityContainer = _kernel.Get<EntityContainer>();
 
 			IsInitialised = true;
+
+		}
+
+		/// <summary>
+		/// Steps the simulation forward one tick.
+		/// </summary>
+		private void Tick()
+		{
+			
+			EntityContainer.Tick();
 
 		}
 
