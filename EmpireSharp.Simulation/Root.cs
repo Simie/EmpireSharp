@@ -69,8 +69,8 @@ namespace EmpireSharp.Simulation
 
 			EntityContainer = _kernel.Get<EntityContainer>();
 
-			EntityContainer.CreateEntity<Unit>();
-			EntityContainer.CreateEntity<Unit>();
+			EntityContainer.CreateEntity<Unit>( new FixedVector2(10, 15));
+			EntityContainer.CreateEntity<Unit>(new FixedVector2(-10, 10));
 
 			IsInitialised = true;
 

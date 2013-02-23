@@ -33,6 +33,8 @@ namespace EmpireSharp.Windows
 
 		private Simulation.Root _simulation;
 
+		private Texture2D _white;
+
 		public EmpireWindows()
 			: base()
 		{
@@ -63,6 +65,9 @@ namespace EmpireSharp.Windows
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
+
+			_white = new Texture2D(GraphicsDevice, 1,1,false, SurfaceFormat.Color);
+			_white.SetData(new Color[1] {Color.White});
 
 			// TODO: use this.Content to load your game content here
 		}
@@ -101,6 +106,18 @@ namespace EmpireSharp.Windows
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
 			// TODO: Add your drawing code here
+
+			var entities = _simulation.EntityContainer.Entities;
+
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+			foreach (var baseEntity in entities) {
+				
+				spriteBatch.Draw(_white, new Rectangle((int)baseEntity.Transform.Position.X-1, (int)baseEntity.Transform.Position.Y - 1, 2, 2), new Rectangle(0,0,1,1), Color.Red);
+
+			}
+
+			spriteBatch.End();
 
 			base.Draw(gameTime);
 		}

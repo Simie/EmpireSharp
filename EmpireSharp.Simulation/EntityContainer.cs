@@ -25,6 +25,8 @@ namespace EmpireSharp.Simulation
 
 		private List<Entities.BaseEntity> _internalList;
 
+		public IList<Entities.BaseEntity> Entities { get { return _internalList.AsReadOnly(); } }
+			
 		[Inject]
 		public IKernel Kernel { get; private set; }
 

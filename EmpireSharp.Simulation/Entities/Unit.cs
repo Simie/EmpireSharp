@@ -6,6 +6,8 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
+
+using FixMath.NET;
 using Ninject;
 
 namespace EmpireSharp.Simulation.Entities
@@ -22,7 +24,7 @@ namespace EmpireSharp.Simulation.Entities
 		/// <summary>
 		/// Size of the collision circle around this entity
 		/// </summary>
-		public float CollisionRadius { get; set; }
+		public Fix16 CollisionRadius { get; set; }
 
 		[Inject]
 		protected Terrain Terrain { get; set; }

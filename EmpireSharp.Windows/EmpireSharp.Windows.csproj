@@ -75,6 +75,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dependencies\FixedMath.Net\FixedMath.NET.csproj">
+      <Project>{d46c606e-5826-465f-9983-251e3d3b2f1c}</Project>
+      <Name>FixedMath.NET</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EmpireSharp.Simulation\EmpireSharp.Simulation.csproj">
       <Project>{8e501147-06f0-4a19-88a8-f2b6f7b63677}</Project>
       <Name>EmpireSharp.Simulation</Name>
