@@ -22,8 +22,18 @@ namespace EmpireSharp.Simulation.Entities
 		/// </summary>
 		public Transform Transform;
 
+		/// <summary>
+		/// Unique ID of this entity, assigned on creation.
+		/// </summary>
+		public uint EntityID { get; internal set; }
+
 		[Inject]
 		protected Time Time { get; private set; }
+
+		/// <summary>
+		/// Called after this entity has been assigned an ID, dependencies injected and initial position set.
+		/// </summary>
+		public virtual void Init() {}
 
 		public virtual void Tick() {}
 

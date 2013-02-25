@@ -24,6 +24,7 @@ namespace EmpireSharp.Simulation
 	{
 
 		private List<Entities.BaseEntity> _internalList;
+		private uint _nextEntityID;
 
 		public IList<Entities.BaseEntity> Entities { get { return _internalList.AsReadOnly(); } }
 			
@@ -39,13 +40,15 @@ namespace EmpireSharp.Simulation
 		{
 
 			var entity = new T();
-
+			entity.EntityID = ++_nextEntityID;
 			Kernel.Inject(entity);
 
 			if(initialPosition.HasValue)
 				entity.Transform.Position = initialPosition.Value;
 
 			_internalList.Add(entity);
+
+			entity.Init();
 
 			return entity;
 
