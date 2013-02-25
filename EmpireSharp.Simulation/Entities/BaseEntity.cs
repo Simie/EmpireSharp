@@ -18,14 +18,14 @@ namespace EmpireSharp.Simulation.Entities
 	{
 
 		/// <summary>
-		/// Entity transform (position, rotation)
-		/// </summary>
-		public Transform Transform;
-
-		/// <summary>
 		/// Unique ID of this entity, assigned on creation.
 		/// </summary>
 		public uint EntityID { get; internal set; }
+
+		/// <summary>
+		/// Entity transform (position, rotation)
+		/// </summary>
+		public Transform Transform;
 
 		[Inject]
 		protected Time Time { get; private set; }
@@ -35,6 +35,9 @@ namespace EmpireSharp.Simulation.Entities
 		/// </summary>
 		public virtual void Init() {}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public virtual void Tick() {}
 
 	}

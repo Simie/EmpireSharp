@@ -1,6 +1,8 @@
 ﻿using EmpireSharp.Simulation;
+using EmpireSharp.Simulation.Commands;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace EmpireSharp.Windows.GameStates
 {
@@ -23,9 +25,26 @@ namespace EmpireSharp.Windows.GameStates
 
 		}
 
+		private bool _prevPressed;
 
 		public void Update(float dt)
 		{
+
+			var mouseState = Mouse.GetState();
+
+			if (mouseState.LeftButton == ButtonState.Pressed) {
+
+				if (!_prevPressed) {
+					
+					_simulation.QueueCommand(new MoveCommand(1, 0, new FixedVector2(0,0)));
+
+				}
+
+			} else {
+
+				_prevPressed = false;
+
+			}
 
 			_simulation.Tick();
 

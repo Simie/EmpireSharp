@@ -42,7 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\MoveCommand.cs" />
     <Compile Include="Entities\Unit.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="EntityContainer.cs" />

@@ -7,6 +7,8 @@
 *
 */
 using System;
+using System.Collections.Generic;
+using EmpireSharp.Simulation.Commands;
 using EmpireSharp.Simulation.Entities;
 using Ninject;
 
@@ -37,6 +39,8 @@ namespace EmpireSharp.Simulation
 		private Time _time;
 
 		private readonly IKernel _kernel;
+
+		private Queue<Commands.Command> _commandQueue = new Queue<Command>(10);
 
 		public Root()
 		{
@@ -69,7 +73,7 @@ namespace EmpireSharp.Simulation
 
 			EntityContainer = _kernel.Get<EntityContainer>();
 
-			EntityContainer.CreateEntity<Unit>( new FixedVector2(10, 15));
+			EntityContainer.CreateEntity<Unit>(new FixedVector2( 10, 15));
 			EntityContainer.CreateEntity<Unit>(new FixedVector2(-10, 10));
 
 			IsInitialised = true;
@@ -84,7 +88,27 @@ namespace EmpireSharp.Simulation
 
 			_time.Tick();
 
+			while (_commandQueue.Count > 0) {
+
+				var command = _commandQueue.Dequeue();
+				_kernel.Inject(command);
+
+				command.Apply();
+
+			}
+
 			EntityContainer.Tick();
+
+		}
+
+		/// <summary>
+		/// Queue a command for execution on the next tick.
+		/// </summary>
+		/// <param name="command"></param>
+		public void QueueCommand(Commands.Command command)
+		{
+
+			_commandQueue.Enqueue(command);
 
 		}
 
