@@ -7,6 +7,7 @@
 *
 */
 
+using System;
 using Microsoft.Xna.Framework;
 
 namespace EmpireSharp.Game.Modules.MonoGame
@@ -18,10 +19,13 @@ namespace EmpireSharp.Game.Modules.MonoGame
 	public class Camera
 	{
 
-		private Vector2 _simulationPosition;
+		private Vector2 _simulationPosition = Vector2.Zero;
 		private Matrix _simulationTransform;
 		private Matrix _inverseTransform;
 		private float _scale;
+
+		private Matrix _directionTransform = Matrix.CreateRotationZ(MathHelper.PiOver4);
+		private Matrix _inverseDirectionTransform = Matrix.Invert(Matrix.CreateRotationZ(MathHelper.PiOver4));
 
 		public bool IsDirty { get; set; }
 
@@ -44,6 +48,13 @@ namespace EmpireSharp.Game.Modules.MonoGame
 				return _inverseTransform;
 			}
 		}
+
+		public Matrix DirectionTransform
+		{
+			get { return _directionTransform; }
+		}
+
+		public Matrix InverseDirectionTransform { get { return _inverseDirectionTransform; } }
 
 		/// <summary>
 		/// Position of the camera in simulation space.
@@ -70,20 +81,24 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		public Vector2 TransformSimulationToView(Vector2 position)
 		{
-
-			Vector2.Transform(ref position, ref _simulationTransform, out position);
-
-			return position;
-
+			return Vector2.Transform(position, Transform);
 		}
 	
 		public Vector2 TransformViewToSimulation(Vector2 position)
 		{
+			return Vector2.Transform(position, InverseTransform);
+		}
 
-			Vector2.Transform(ref position, ref _inverseTransform, out position);
+		public Vector2 TransformSimulationDirectionToView(Vector2 direction)
+		{
+			Vector2.Transform(ref direction, ref _directionTransform, out direction);
+			return direction;
+		}
 
-			return position;
-
+		public Vector2 TransformViewDirectionToSimulation(Vector2 direction)
+		{
+			Vector2.Transform(ref direction, ref _inverseDirectionTransform, out direction);
+			return direction;
 		}
 
 		public void Rebuild()
@@ -91,8 +106,9 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			var matrix = Matrix.Identity;
 
+			matrix *= Matrix.CreateTranslation(SimulationPosition.X, SimulationPosition.Y, 0);
 			matrix *= Matrix.CreateScale(Scale);
-			matrix *= Matrix.CreateRotationZ(MathHelper.PiOver4);
+			matrix *= DirectionTransform;
 			matrix *= Matrix.CreateScale(1.0f, 0.5f, 1.0f);
 
 			_simulationTransform = matrix;

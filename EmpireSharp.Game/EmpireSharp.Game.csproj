@@ -39,8 +39,10 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Framework\Services\IInputService.cs" />
     <Compile Include="Modules\MonoGame\Camera.cs" />
     <Compile Include="Framework\Services\ILog.cs" />
+    <Compile Include="Modules\MonoGame\InputManager.cs" />
     <Compile Include="Modules\MonoGame\LogService.cs" />
     <Compile Include="Modules\MonoGame\Shell.cs" />
     <Compile Include="Modules\MonoGame\GameStates\GameStateMain.cs" />

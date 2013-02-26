@@ -66,8 +66,8 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 					var tex = _terrainLookup[tile.TypeID];
 
-					int indice = ((size - i) % (size - 1)) * (size + j) % size;
-					var sourceRect = TileSourceRect(tile.TypeID, indice, ref tex);
+					int tileIndice = ((size - i) % (size - 1)) * (size + j) % size;
+					var sourceRect = TileSourceRect(tile.TypeID, tileIndice, ref tex);
 
 					var targetPosition = camera.TransformSimulationToView(new Vector2(i + 0.5f, j + 0.5f));
 
@@ -84,9 +84,10 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		public Rectangle TileSourceRect(int tileType, int index, ref Texture2D tex)
 		{
 
+
 			var type = _terrain.TerrainTypes[tileType];
 
-			var x = type.TileWidth * index;
+			var x = type.TileWidth * (index % 99);
 			var y = 0;
 
 			while (x >= tex.Width) {

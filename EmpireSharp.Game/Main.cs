@@ -26,8 +26,6 @@ namespace EmpireSharp.Game
 			IoC.Settings.InjectParentPrivateProperties = true;
 			IoC.Settings.InjectNonPublic = true;
 
-			IoC.Bind<ILog>().To<LogService>().InSingletonScope();
-			IoC.Bind<IContentService>().To<ContentService>().InSingletonScope();
 			IoC.Bind<IShell>().To<Shell>().InSingletonScope();
 
 		}

@@ -37,12 +37,22 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		internal GameStates.GameStateMain MainGameState { get; set; }
 
-		[Inject]
 		public Ninject.IKernel IoC { get; private set; }
 
-		public Shell()
+		private InputManager _inputManager;
+
+		[Inject]
+		public Shell(IKernel ioc)
 			: base()
 		{
+
+			IoC = ioc;
+
+			IoC.Bind<ILog>().To<LogService>().InSingletonScope();
+			IoC.Bind<IContentService>().To<ContentService>().InSingletonScope();
+			IoC.Bind<IInputService>().To<InputManager>().InSingletonScope();
+
+			_inputManager = IoC.Get<IInputService>() as InputManager;
 
 			_graphics = new GraphicsDeviceManager(this);
 			_graphics.PreferredBackBufferHeight = 720;
@@ -72,7 +82,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			IsMouseVisible = true;
 
 			this.Window.Title = "EmpireSharp";
-
+			 
 			MainGameState = IoC.Get<GameStateMain>();
 
 			WhitePixelTex = new Texture2D(GraphicsDevice, 1,1);
@@ -110,8 +120,11 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
+
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
+
+			_inputManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
 			MainGameState.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 

@@ -38,6 +38,9 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 		IShell Shell { get; set; }
 
 		[Inject]
+		IInputService Input { get; set; }
+
+		[Inject]
 		public GameStateMain(IContentService content, IKernel ioc)
 		{
 
@@ -59,6 +62,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 		{
 
 			var mouseState = Mouse.GetState();
+			var keyState = Keyboard.GetState();
 
 			if (mouseState.LeftButton == ButtonState.Pressed) {
 
@@ -76,6 +80,34 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 			} else {
 
 				_prevPressed = false;
+
+			}
+
+			Vector2 cameraMoveDirection = Vector2.Zero;
+
+			const float scrollSpeed = 3;
+
+			if (Input.IsKeyDown(Keys.Left)) {
+				cameraMoveDirection.X += 1;
+			}
+			if (Input.IsKeyDown(Keys.Right)) {
+				cameraMoveDirection.X -= 1;
+			}	
+			if (Input.IsKeyDown(Keys.Up)) {
+				cameraMoveDirection.Y += 1;
+			}
+			if (Input.IsKeyDown(Keys.Down)) {
+				cameraMoveDirection.Y -= 1;
+			}
+
+			if (cameraMoveDirection.LengthSquared() > 0) {
+
+				cameraMoveDirection.Normalize();
+				cameraMoveDirection.Y *= 2;
+
+				var simDirection = _camera.TransformViewDirectionToSimulation(cameraMoveDirection);
+
+				_camera.SimulationPosition += simDirection * dt * scrollSpeed;
 
 			}
 
