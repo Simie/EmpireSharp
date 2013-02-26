@@ -7,11 +7,11 @@
 *
 */
 
-using EmpireSharp.Windows.Framework.Services;
-using EmpireSharp.Windows.Modules.MonoGame;
+using EmpireSharp.Game.Framework.Services;
+using EmpireSharp.Game.Modules.MonoGame;
 using Ninject;
 
-namespace EmpireSharp.Windows
+namespace EmpireSharp.Game
 {
 
 	public class Main

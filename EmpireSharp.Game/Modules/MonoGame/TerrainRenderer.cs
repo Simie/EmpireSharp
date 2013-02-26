@@ -9,12 +9,12 @@
 
 using System.Collections.Generic;
 using EmpireSharp.Data;
-using EmpireSharp.Windows.Framework.Services;
+using EmpireSharp.Game.Framework.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Ninject;
 
-namespace EmpireSharp.Windows.Modules.MonoGame
+namespace EmpireSharp.Game.Modules.MonoGame
 {
 
 	class TerrainRenderer

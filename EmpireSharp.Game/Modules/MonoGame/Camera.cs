@@ -9,7 +9,7 @@
 
 using Microsoft.Xna.Framework;
 
-namespace EmpireSharp.Windows.Modules.MonoGame
+namespace EmpireSharp.Game.Modules.MonoGame
 {
 
 	/// <summary>

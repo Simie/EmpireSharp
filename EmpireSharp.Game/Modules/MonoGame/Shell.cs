@@ -9,14 +9,14 @@
 
 using System;
 using System.IO;
-using EmpireSharp.Windows.Framework.Services;
-using EmpireSharp.Windows.Modules.MonoGame.GameStates;
+using EmpireSharp.Game.Framework.Services;
+using EmpireSharp.Game.Modules.MonoGame.GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Ninject;
 
-namespace EmpireSharp.Windows.Modules.MonoGame
+namespace EmpireSharp.Game.Modules.MonoGame
 {
 	/// <summary>
 	/// This is the main type for your game

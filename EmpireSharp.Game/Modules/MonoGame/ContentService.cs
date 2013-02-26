@@ -11,13 +11,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using EmpireSharp.Windows.Framework.Services;
+using EmpireSharp.Game.Framework.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Ninject;
 using Papyrus;
 
-namespace EmpireSharp.Windows.Modules.MonoGame
+namespace EmpireSharp.Game.Modules.MonoGame
 {
 
 	class ContentService : IContentService

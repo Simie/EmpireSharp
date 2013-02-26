@@ -7,17 +7,17 @@
 *
 */
 
+using EmpireSharp.Game.Framework.Services;
 using EmpireSharp.Simulation;
 using EmpireSharp.Simulation.Commands;
 using EmpireSharp.Simulation.Entities;
-using EmpireSharp.Windows.Framework.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Ninject;
 using Papyrus;
 
-namespace EmpireSharp.Windows.Modules.MonoGame.GameStates
+namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 {
 
 	public class GameStateMain

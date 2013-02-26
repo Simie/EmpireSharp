@@ -11,11 +11,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EmpireSharp.Windows.Modules.MonoGame;
+using EmpireSharp.Game.Modules.MonoGame;
 
 #endregion
 
-namespace EmpireSharp.Windows
+namespace EmpireSharp.Game
 {
 	/// <summary>
 	/// The main class.

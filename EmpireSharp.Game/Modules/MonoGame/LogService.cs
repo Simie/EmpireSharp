@@ -8,9 +8,9 @@
 */
 
 using System;
-using EmpireSharp.Windows.Framework.Services;
+using EmpireSharp.Game.Framework.Services;
 
-namespace EmpireSharp.Windows.Modules.MonoGame
+namespace EmpireSharp.Game.Modules.MonoGame
 {
 	class LogService : ILog
 	{

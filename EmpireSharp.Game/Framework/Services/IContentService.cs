@@ -10,7 +10,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Papyrus;
 
-namespace EmpireSharp.Windows.Framework.Services
+namespace EmpireSharp.Game.Framework.Services
 {
 	public interface IContentService
 	{

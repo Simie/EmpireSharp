@@ -8,7 +8,7 @@
 */
 using System;
 
-namespace EmpireSharp.Windows.Framework.Services
+namespace EmpireSharp.Game.Framework.Services
 {
 	public interface ILog
 	{

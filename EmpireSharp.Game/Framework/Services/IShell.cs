@@ -6,7 +6,7 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
-namespace EmpireSharp.Windows.Framework.Services
+namespace EmpireSharp.Game.Framework.Services
 {
 	public interface IShell
 	{
