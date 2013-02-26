@@ -85,7 +85,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			Vector2 cameraMoveDirection = Vector2.Zero;
 
-			const float scrollSpeed = 3;
+			const float scrollSpeed = 9;
 
 			if (Input.IsKeyDown(Keys.Left)) {
 				cameraMoveDirection.X += 1;
