@@ -8,8 +8,8 @@
     <ProjectGuid>{D723E657-007B-4B15-8DEE-A6BA1D8310CD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmpireSharp.Windows</RootNamespace>
-    <AssemblyName>EmpireSharp.Windows</AssemblyName>
+    <RootNamespace>EmpireSharp.Game</RootNamespace>
+    <AssemblyName>EmpireSharp.Game</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
@@ -39,7 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
+    <Compile Include="Modules\MonoGame\Camera.cs" />
     <Compile Include="Framework\Services\ILog.cs" />
     <Compile Include="Modules\MonoGame\LogService.cs" />
     <Compile Include="Modules\MonoGame\Shell.cs" />

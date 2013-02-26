@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpireSharp.Windows", "EmpireSharp.Windows\EmpireSharp.Windows.csproj", "{D723E657-007B-4B15-8DEE-A6BA1D8310CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpireSharp.Game", "EmpireSharp.Game\EmpireSharp.Game.csproj", "{D723E657-007B-4B15-8DEE-A6BA1D8310CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpireSharp.Simulation", "EmpireSharp.Simulation\EmpireSharp.Simulation.csproj", "{8E501147-06F0-4A19-88A8-F2B6F7B63677}"
 EndProject
