@@ -7,27 +7,27 @@
 *
 */
 
-#region Using Statements
 using System;
-using System.Collections.Generic;
-using EmpireSharp.Simulation;
-using EmpireSharp.Windows.GameStates;
+using System.IO;
+using EmpireSharp.Windows.Framework.Services;
+using EmpireSharp.Windows.Modules.MonoGame.GameStates;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Storage;
-using Microsoft.Xna.Framework.GamerServices;
-#endregion
+using Ninject;
 
-namespace EmpireSharp.Windows
+namespace EmpireSharp.Windows.Modules.MonoGame
 {
 	/// <summary>
 	/// This is the main type for your game
 	/// </summary>
-	public class EmpireWindows : Microsoft.Xna.Framework.Game
+	public class Shell : Microsoft.Xna.Framework.Game, IShell
 	{
 
+		public string WindowTitle { get { return Window.Title; } set { Window.Title = value; } }
+
+		public int Width { get { return Window.ClientBounds.Width; } set { throw new NotImplementedException(); } }
+		public int Height { get { return Window.ClientBounds.Height; } set { throw new NotImplementedException(); } }
 
 		private GraphicsDeviceManager _graphics;
 
@@ -37,16 +37,16 @@ namespace EmpireSharp.Windows
 
 		internal GameStates.GameStateMain MainGameState { get; set; }
 
-		public EmpireWindows()
+		[Inject]
+		public Ninject.IKernel IoC { get; private set; }
+
+		public Shell()
 			: base()
 		{
 
 			_graphics = new GraphicsDeviceManager(this);
 			_graphics.PreferredBackBufferHeight = 720;
 			_graphics.PreferredBackBufferWidth = 1280;
-
-			//Content = new ContentManager(Services);
-			Content.RootDirectory = "Content";
 
 		}
 
@@ -61,17 +61,24 @@ namespace EmpireSharp.Windows
 
 			base.Initialize();
 
+
+			var contentService = (ContentService) IoC.Get<IContentService>();
+			contentService.ContentDirectory = Path.GetFullPath("../../../../Data"); // HACK. TODO: Not hard code this
+
+			contentService.LoadDatabase();
+
 			SpriteBatch = new SpriteBatch(GraphicsDevice);
 
 			IsMouseVisible = true;
 
 			this.Window.Title = "EmpireSharp";
 
-			MainGameState = new GameStateMain(this);
+			MainGameState = IoC.Get<GameStateMain>();
 
 			WhitePixelTex = new Texture2D(GraphicsDevice, 1,1);
 			WhitePixelTex.SetData(new Color[] {Color.White});
-			
+
+
 		}
 
 		/// <summary>

@@ -7,7 +7,9 @@
 *
 */
 
+using System.Collections.Generic;
 using EmpireSharp.Simulation.Entities;
+using Ninject;
 
 namespace EmpireSharp.Simulation
 {
@@ -54,6 +56,13 @@ namespace EmpireSharp.Simulation
 		/// </summary>
 		public int Size { get; private set; }
 
+		private List<Data.Terrain> _terrainTypes;
+
+		public IList<Data.Terrain> TerrainTypes { get { return _terrainTypes.AsReadOnly(); } }
+
+		[Inject]
+		protected DataService Data { get; set; }
+
 		public Terrain()
 		{
 
@@ -64,6 +73,10 @@ namespace EmpireSharp.Simulation
 
 			Size = size;
 			_tileMap = new Tile[Size, Size];
+
+			var terrainTypes = Data.Database.GetRecordsOfType<Data.Terrain>();
+
+			_terrainTypes = new List<Data.Terrain>(terrainTypes);
 
 		}
 

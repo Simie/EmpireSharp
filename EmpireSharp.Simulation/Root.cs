@@ -53,6 +53,7 @@ namespace EmpireSharp.Simulation
 			_kernel.Bind<Time>().To<Time>().InSingletonScope();
 			_kernel.Bind<Terrain>().To<Terrain>().InSingletonScope();
 			_kernel.Bind<EntityContainer>().To<EntityContainer>().InSingletonScope();
+			_kernel.Bind<DataService>().To<DataService>().InSingletonScope();
 
 		}
 
@@ -60,11 +61,14 @@ namespace EmpireSharp.Simulation
 		/// Initialise the simulation.
 		/// </summary>
 		/// <remarks>Throws <c>InvalidOperationException</c> if the simulation is already initialised.</remarks>
-		public void Init()
+		public void Init(Papyrus.RecordDatabase data)
 		{
 
 			if (IsInitialised)
 				throw new InvalidOperationException("Simulation is already initialised.");
+
+			var dataService = _kernel.Get<DataService>();
+			dataService.Init(data);
 
 			_time = _kernel.Get<Time>();
 

@@ -2,8 +2,27 @@
   "Name": "Test Data",
   "Description": "Some engine test data, woop woop.",
   "Author": "Simon Moles",
-  "LastModified": "2013-02-25T22:49:52.7489295Z",
-  "ModuleDependencies": [],
-  "RecordLists": {},
+  "LastModified": "2013-02-26T01:09:04.9946507Z",
+  "ModuleDependencies": [
+    "8a1666a0-e60d-48b1-bf9e-9a27a6369dde"
+  ],
+  "RecordLists": {
+    "EmpireSharp.Data.Terrain": {
+      "Records": [
+        {
+          "Mode": "Append",
+          "Location": "Test Data",
+          "Index": 0,
+          "Destination": "Test Data",
+          "Record": {
+            "ID": "terr_dirt",
+            "AssetPath": "Assets\\Terrain\\DirtMap.png",
+            "TileWidth": 97,
+            "TileHeight": 49
+          }
+        }
+      ]
+    }
+  },
   "PluginDependencies": []
 }

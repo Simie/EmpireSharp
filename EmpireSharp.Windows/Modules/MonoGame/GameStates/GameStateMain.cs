@@ -1,28 +1,47 @@
-﻿using EmpireSharp.Simulation;
+﻿/*
+*  This Source Code Form is subject to the terms of the Mozilla Public
+*  License, v. 2.0. If a copy of the MPL was not distributed with this
+*  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*
+*  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
+*
+*/
+
+using EmpireSharp.Simulation;
 using EmpireSharp.Simulation.Commands;
 using EmpireSharp.Simulation.Entities;
+using EmpireSharp.Windows.Framework.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Ninject;
+using Papyrus;
 
-namespace EmpireSharp.Windows.GameStates
+namespace EmpireSharp.Windows.Modules.MonoGame.GameStates
 {
 
 	public class GameStateMain
 	{
 
-		public EmpireWindows Game { get; private set; }
 
 		private Simulation.Root _simulation;
 
+		private TerrainRenderer _terrainRenderer;
 
-		public GameStateMain(EmpireWindows _game)
+		[Inject]
+		IContentService Content { get; set; }
+
+		[Inject]
+		IShell Shell { get; set; }
+
+		[Inject]
+		public GameStateMain(IContentService content)
 		{
 
-			Game = _game;
-
 			_simulation = new Root();
-			_simulation.Init();
+			_simulation.Init(content.Database);
+
+			_terrainRenderer = new TerrainRenderer(_simulation.Terrain);
 
 		}
 
@@ -54,12 +73,14 @@ namespace EmpireSharp.Windows.GameStates
 		public void Draw()
 		{
 
-			Game.GraphicsDevice.Clear(Color.Black);
+			var game = Shell as Shell;
+
+			game.GraphicsDevice.Clear(Color.Black);
 
 
 			var entities = _simulation.EntityContainer.Entities;
 
-			Game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+			game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
 			foreach (var baseEntity in entities) {
 
@@ -67,7 +88,7 @@ namespace EmpireSharp.Windows.GameStates
 
 					var unit = baseEntity as Unit;
 
-					Game.SpriteBatch.Draw(Game.WhitePixelTex,
+					game.SpriteBatch.Draw(game.WhitePixelTex,
 					                      new Rectangle((int) unit.Transform.Position.X - 1,
 					                                    (int) unit.Transform.Position.Y - 1, 2, 2), new Rectangle(0, 0, 1, 1),
 					                      Color.Red);
@@ -75,7 +96,7 @@ namespace EmpireSharp.Windows.GameStates
 				}
 			}
 
-			Game.SpriteBatch.End();
+			game.SpriteBatch.End();
 
 		}
 

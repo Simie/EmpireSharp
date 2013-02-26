@@ -11,6 +11,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EmpireSharp.Windows.Modules.MonoGame;
+
 #endregion
 
 namespace EmpireSharp.Windows
@@ -20,7 +22,7 @@ namespace EmpireSharp.Windows
 	/// </summary>
 	public static class Program
 	{
-		private static EmpireWindows game;
+		private static Main game;
 
 		/// <summary>
 		/// The main entry point for the application.
@@ -28,7 +30,7 @@ namespace EmpireSharp.Windows
 		[STAThread]
 		static void Main()
 		{
-			game = new EmpireWindows();
+			game = new Main();
 			game.Run();
 		}
 	}

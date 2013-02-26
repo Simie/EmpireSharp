@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,8 +31,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Papyrus.0.2.0.9\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Papyrus">
+      <HintPath>..\packages\Papyrus.0.2.0.9\lib\net35\Papyrus.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyTools">
+      <HintPath>..\packages\Papyrus.0.2.0.9\lib\net35\PropertyTools.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net-patch">
+      <HintPath>..\packages\Papyrus.0.2.0.9\lib\net35\protobuf-net-patch.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\MoveCommand.cs" />
+    <Compile Include="DataService.cs" />
     <Compile Include="Entities\Building.cs" />
     <Compile Include="Entities\Unit.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
@@ -67,6 +81,10 @@
     <ProjectReference Include="..\Dependencies\FixedMath.Net\FixedMath.NET.csproj">
       <Project>{d46c606e-5826-465f-9983-251e3d3b2f1c}</Project>
       <Name>FixedMath.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmpireSharp.Data\EmpireSharp.Data.csproj">
+      <Project>{ba5b9651-7940-4d13-bda7-d844b1c2bc18}</Project>
+      <Name>EmpireSharp.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
