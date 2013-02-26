@@ -73,7 +73,7 @@ namespace EmpireSharp.Windows.Modules.MonoGame
 		public string FullAssetPath(string assetPath)
 		{
 
-			return Path.GetFullPath(Path.Combine(ContentDirectory, "Assets", assetPath));
+			return Path.GetFullPath(Path.Combine(ContentDirectory, assetPath));
 
 		}
 
@@ -91,7 +91,7 @@ namespace EmpireSharp.Windows.Modules.MonoGame
 
 				try {
 
-					using (var f = File.OpenRead(assetPath))
+					using (var f = File.OpenRead(path))
 						ret = Texture2D.FromStream(((Shell) Shell).GraphicsDevice, f);
 
 				} catch (Exception e) {

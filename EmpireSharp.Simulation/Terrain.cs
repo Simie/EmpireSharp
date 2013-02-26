@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using EmpireSharp.Simulation.Entities;
 using Ninject;
+using System.Linq;
 
 namespace EmpireSharp.Simulation
 {
@@ -78,6 +79,23 @@ namespace EmpireSharp.Simulation
 
 			_terrainTypes = new List<Data.Terrain>(terrainTypes);
 
+			for (int i = 0; i < Size; i++) {
+
+				for (int j = 0; j < Size; j++) {
+
+					_tileMap[i,j] = new Tile() {
+						TypeID = 0
+					};
+
+				}
+
+			}
+
+		}
+
+		public Tile At(int x, int y)
+		{
+			return _tileMap[x, y];
 		}
 
 		/// <summary>

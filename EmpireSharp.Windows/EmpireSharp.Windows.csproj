@@ -50,7 +50,7 @@
     <Compile Include="Modules\MonoGame\ContentService.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
     <Compile Include="Framework\Services\IContentService.cs" />
-    <Compile Include="TerrainRenderer.cs" />
+    <Compile Include="Modules\MonoGame\TerrainRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

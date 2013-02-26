@@ -35,13 +35,14 @@ namespace EmpireSharp.Windows.Modules.MonoGame.GameStates
 		IShell Shell { get; set; }
 
 		[Inject]
-		public GameStateMain(IContentService content)
+		public GameStateMain(IContentService content, IKernel ioc)
 		{
 
 			_simulation = new Root();
 			_simulation.Init(content.Database);
 
-			_terrainRenderer = new TerrainRenderer(_simulation.Terrain);
+			_terrainRenderer = ioc.Get<TerrainRenderer>();
+			_terrainRenderer.Init(_simulation.Terrain);
 
 		}
 
@@ -77,6 +78,7 @@ namespace EmpireSharp.Windows.Modules.MonoGame.GameStates
 
 			game.GraphicsDevice.Clear(Color.Black);
 
+			_terrainRenderer.Draw(null);
 
 			var entities = _simulation.EntityContainer.Entities;
 

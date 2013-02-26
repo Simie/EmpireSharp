@@ -6,14 +6,10 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Microsoft.Xna.Framework;
 
-namespace EmpireSharp.Windows
+namespace EmpireSharp.Windows.Modules.MonoGame
 {
 
 	/// <summary>
