@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+*  This Source Code Form is subject to the terms of the Mozilla Public
+*  License, v. 2.0. If a copy of the MPL was not distributed with this
+*  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*
+*  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
+*
+*/
+
+using System;
+using EmpireSharp.Simulation.Entities;
 
 namespace EmpireSharp.Simulation.Commands
 {
@@ -24,7 +30,10 @@ namespace EmpireSharp.Simulation.Commands
 		internal override void Apply()
 		{
 
-			var unit = EntityContainer[TargetID];
+			var unit = EntityContainer[TargetID] as Unit;
+
+			if(unit == null)
+				throw new Exception("Expected a Unit as the target for MoveCommand, got " + EntityContainer[TargetID] + " instead.");
 
 			unit.Transform.Position = TargetPosition;
 

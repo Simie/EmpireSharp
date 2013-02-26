@@ -1,5 +1,6 @@
 ﻿using EmpireSharp.Simulation;
 using EmpireSharp.Simulation.Commands;
+using EmpireSharp.Simulation.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -62,8 +63,16 @@ namespace EmpireSharp.Windows.GameStates
 
 			foreach (var baseEntity in entities) {
 
-				Game.SpriteBatch.Draw(Game.WhitePixelTex, new Rectangle((int)baseEntity.Transform.Position.X - 1, (int)baseEntity.Transform.Position.Y - 1, 2, 2), new Rectangle(0, 0, 1, 1), Color.Red);
+				if (baseEntity is Unit) {
 
+					var unit = baseEntity as Unit;
+
+					Game.SpriteBatch.Draw(Game.WhitePixelTex,
+					                      new Rectangle((int) unit.Transform.Position.X - 1,
+					                                    (int) unit.Transform.Position.Y - 1, 2, 2), new Rectangle(0, 0, 1, 1),
+					                      Color.Red);
+
+				}
 			}
 
 			Game.SpriteBatch.End();

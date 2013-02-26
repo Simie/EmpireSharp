@@ -22,11 +22,6 @@ namespace EmpireSharp.Simulation.Entities
 		/// </summary>
 		public uint EntityID { get; internal set; }
 
-		/// <summary>
-		/// Entity transform (position, rotation)
-		/// </summary>
-		public Transform Transform;
-
 		[Inject]
 		protected Time Time { get; private set; }
 

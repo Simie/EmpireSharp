@@ -6,11 +6,8 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using EmpireSharp.Simulation.Entities;
 
 namespace EmpireSharp.Simulation
 {
@@ -18,8 +15,25 @@ namespace EmpireSharp.Simulation
 	public struct Tile
 	{
 
+		/// <summary>
+		/// Terrain type ID. Index of the actual tile type located in the Terrain service.
+		/// </summary>
 		public int TypeID;
+		
+		/// <summary>
+		/// Is this tile passable by units. Be sure to check the terrain type too, this only
+		/// refers to if the tile is blocked by a building or wall.
+		/// </summary>
 		public bool Passable;
+
+		/// <summary>
+		/// If this tile is inpassible, this might contain the building that is blocking it.
+		/// </summary>
+		public Building Blocker;
+
+		/// <summary>
+		/// Elevation of this tile.
+		/// </summary>
 		public int Elevation;
 
 	}
@@ -50,6 +64,20 @@ namespace EmpireSharp.Simulation
 
 			Size = size;
 			_tileMap = new Tile[Size, Size];
+
+		}
+
+		/// <summary>
+		/// Mark a tile as filled with a building blocking the area.
+		/// </summary>
+		/// <returns></returns>
+		internal bool MarkTileCollisionFill(Entities.Building building, int x, int y)
+		{
+
+			_tileMap[x, y].Passable = false;
+			_tileMap[x, y].Blocker = building;
+
+			return true;
 
 		}
 

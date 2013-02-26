@@ -56,15 +56,12 @@ namespace EmpireSharp.Simulation
 			_entityLookup = new Dictionary<uint, BaseEntity>(1024);
 		}
 
-		public T CreateEntity<T>(FixedVector2? initialPosition = null) where T : Entities.BaseEntity, new()
+		public T CreateEntity<T>() where T : Entities.BaseEntity, new()
 		{
 
 			var entity = new T();
 			entity.EntityID = ++_nextEntityID;
 			Kernel.Inject(entity);
-
-			if(initialPosition.HasValue)
-				entity.Transform.Position = initialPosition.Value;
 
 			_internalList.Add(entity);
 			_entityLookup[_nextEntityID] = entity;

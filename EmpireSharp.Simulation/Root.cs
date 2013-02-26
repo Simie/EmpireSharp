@@ -63,7 +63,7 @@ namespace EmpireSharp.Simulation
 		public void Init()
 		{
 
-			if(IsInitialised)
+			if (IsInitialised)
 				throw new InvalidOperationException("Simulation is already initialised.");
 
 			_time = _kernel.Get<Time>();
@@ -73,8 +73,15 @@ namespace EmpireSharp.Simulation
 
 			EntityContainer = _kernel.Get<EntityContainer>();
 
-			EntityContainer.CreateEntity<Unit>(new FixedVector2( 10, 15));
-			EntityContainer.CreateEntity<Unit>(new FixedVector2(-10, 10));
+			{
+				var u = EntityContainer.CreateEntity<Unit>();
+				u.Transform.Position = new FixedVector2(10, 15);
+			}
+
+			{
+				var u = EntityContainer.CreateEntity<Unit>();
+				u.Transform.Position = new FixedVector2(20, 15);
+			}
 
 			IsInitialised = true;
 

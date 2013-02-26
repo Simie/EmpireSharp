@@ -26,6 +26,11 @@ namespace EmpireSharp.Simulation.Entities
 		/// </summary>
 		public Fix16 CollisionRadius { get; set; }
 
+		/// <summary>
+		/// Entity transform (position, rotation)
+		/// </summary>
+		public Transform Transform;
+
 		[Inject]
 		protected Terrain Terrain { get; set; }
 
