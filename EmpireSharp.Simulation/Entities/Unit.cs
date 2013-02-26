@@ -39,7 +39,7 @@ namespace EmpireSharp.Simulation.Entities
 
 			base.Tick();
 
-			Transform.Position += FixedVector2.One * Time.TimeStep;
+			Transform.Position += new FixedVector2((Fix16)0.1, (Fix16)0) * Time.TimeStep;
 
 		}
 

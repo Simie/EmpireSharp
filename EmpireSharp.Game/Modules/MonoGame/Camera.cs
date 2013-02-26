@@ -19,8 +19,31 @@ namespace EmpireSharp.Game.Modules.MonoGame
 	{
 
 		private Vector2 _simulationPosition;
+		private Matrix _simulationTransform;
+		private Matrix _inverseTransform;
+		private float _scale;
 
 		public bool IsDirty { get; set; }
+
+		public Matrix Transform
+		{
+			get
+			{
+				if (IsDirty)
+					Rebuild();
+				return _simulationTransform;
+			}
+		}
+
+		public Matrix InverseTransform
+		{
+			get
+			{
+				if(IsDirty)
+					Rebuild();
+				return _inverseTransform;
+			}
+		}
 
 		/// <summary>
 		/// Position of the camera in simulation space.
@@ -33,6 +56,48 @@ namespace EmpireSharp.Game.Modules.MonoGame
 				_simulationPosition = value;
 				IsDirty = true;
 			}
+
+		}
+
+		public float Scale
+		{
+			get { return _scale; }
+			set { 
+				_scale = value;
+				IsDirty = true;
+			}
+		}
+
+		public Vector2 TransformSimulationToView(Vector2 position)
+		{
+
+			Vector2.Transform(ref position, ref _simulationTransform, out position);
+
+			return position;
+
+		}
+	
+		public Vector2 TransformViewToSimulation(Vector2 position)
+		{
+
+			Vector2.Transform(ref position, ref _inverseTransform, out position);
+
+			return position;
+
+		}
+
+		public void Rebuild()
+		{
+
+			var matrix = Matrix.Identity;
+
+			matrix *= Matrix.CreateScale(Scale);
+			matrix *= Matrix.CreateRotationZ(MathHelper.PiOver4);
+			matrix *= Matrix.CreateScale(1.0f, 0.5f, 1.0f);
+
+			_simulationTransform = matrix;
+			Matrix.Invert(ref _simulationTransform, out _inverseTransform);
+			IsDirty = false;
 
 		}
 

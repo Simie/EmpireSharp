@@ -69,7 +69,9 @@ namespace EmpireSharp.Game.Modules.MonoGame
 					int indice = ((size - i) % (size - 1)) * (size + j) % size;
 					var sourceRect = TileSourceRect(tile.TypeID, indice, ref tex);
 
-					sb.Draw(tex, new Rectangle(i*tileWidth, j*tileWidth, tileWidth, tileHeight), sourceRect, Color.White);
+					var targetPosition = camera.TransformSimulationToView(new Vector2(i + 0.5f, j + 0.5f));
+
+					sb.Draw(tex, new Rectangle((int)(targetPosition.X - tileWidth * 0.5f), (int)(targetPosition.Y - tileHeight * 0.5f), tileWidth, tileHeight), sourceRect, Color.White);
 
 				}
 

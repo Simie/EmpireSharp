@@ -11,6 +11,7 @@ using EmpireSharp.Game.Framework.Services;
 using EmpireSharp.Simulation;
 using EmpireSharp.Simulation.Commands;
 using EmpireSharp.Simulation.Entities;
+using FixMath.NET;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -28,6 +29,8 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 		private TerrainRenderer _terrainRenderer;
 
+		private Camera _camera;
+
 		[Inject]
 		IContentService Content { get; set; }
 
@@ -44,6 +47,10 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 			_terrainRenderer = ioc.Get<TerrainRenderer>();
 			_terrainRenderer.Init(_simulation.Terrain);
 
+			_camera = new Camera();
+			_camera.Scale = 62;
+			_camera.Rebuild();
+
 		}
 
 		private bool _prevPressed;
@@ -56,8 +63,13 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 			if (mouseState.LeftButton == ButtonState.Pressed) {
 
 				if (!_prevPressed) {
-					
-					_simulation.QueueCommand(new MoveCommand(1, 0, new FixedVector2(0,0)));
+
+
+					var simPoint = _camera.TransformViewToSimulation(new Vector2(mouseState.X, mouseState.Y));
+
+					_simulation.QueueCommand(new MoveCommand(1, 0, new FixedVector2((Fix16)simPoint.X, (Fix16)simPoint.Y)));
+					_prevPressed = true;
+
 
 				}
 
@@ -78,7 +90,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			game.GraphicsDevice.Clear(Color.Black);
 
-			_terrainRenderer.Draw(null);
+			_terrainRenderer.Draw(_camera);
 
 			var entities = _simulation.EntityContainer.Entities;
 
@@ -90,9 +102,13 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 					var unit = baseEntity as Unit;
 
+					var pos = new Vector2((float)unit.Transform.Position.X, (float)unit.Transform.Position.Y);
+
+					pos = _camera.TransformSimulationToView(pos);
+
 					game.SpriteBatch.Draw(game.WhitePixelTex,
-					                      new Rectangle((int) unit.Transform.Position.X - 1,
-					                                    (int) unit.Transform.Position.Y - 1, 2, 2), new Rectangle(0, 0, 1, 1),
+					                      new Rectangle((int) pos.X - 1,
+					                                    (int) pos.Y - 1, 2, 2), new Rectangle(0, 0, 1, 1),
 					                      Color.Red);
 
 				}
