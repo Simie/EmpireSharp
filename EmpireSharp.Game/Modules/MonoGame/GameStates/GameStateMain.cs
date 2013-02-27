@@ -148,7 +148,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			var entities = _simulation.EntityContainer.Entities;
 
-			game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, _camera.Transform);
+			game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null, _camera.Transform);
 
 			foreach (var baseEntity in entities) {
 
@@ -160,10 +160,8 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 					pos = Translate.SimulationPointToWorld(pos);
 
-					game.SpriteBatch.Draw(game.WhitePixelTex,
-					                      new Rectangle((int) pos.X - 30,
-					                                    (int) pos.Y - 30, 60, 60), new Rectangle(0, 0, 1, 1),
-					                      Color.Red);
+					game.SpriteBatch.Draw(game.WhitePixelTex, pos, new Rectangle(0, 0, 16, 32),
+					                      Color.Red, 0, new Vector2(8, 30), 1.0f, SpriteEffects.None, 0);
 
 				}
 			}
@@ -172,12 +170,9 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			var entity0 = entities[0] as Unit;
 
-			game.SpriteBatch.Begin();
+			// Draw debug information
 
-			var debugString = String.Format("{0,-25} {1,-25}", 
-				string.Format("Camera Pos: {0}", _camera.SimulationPosition.ShortString()),
-				string.Format("Mouse Pos: {0}", _mouseSimPos.ShortString()),
-				entity0.Transform.Position.ShortString(), _camera.Zoom.ToString("0.00"));
+			game.SpriteBatch.Begin();
 
 			game.SpriteBatch.DrawString(_debugFont, string.Format("Camera Pos: {0}", _camera.SimulationPosition.ShortString()), new Vector2(10, 10), Color.White);
 			game.SpriteBatch.DrawString(_debugFont, string.Format("Mouse Pos: {0}", _mouseSimPos.ShortString()), new Vector2(300, 10), Color.White);
