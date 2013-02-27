@@ -1,0 +1,13 @@
+﻿{
+  "Location": "Test Data",
+  "Index": 0,
+  "Record": {
+    "ID": "terr_dirt",
+    "SpriteMap": {
+      "Index": 0,
+      "Source": "Test Data"
+    },
+    "TileWidth": 97,
+    "TileHeight": 49
+  }
+}

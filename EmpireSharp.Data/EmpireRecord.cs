@@ -16,6 +16,7 @@ namespace EmpireSharp.Data
 	[Record(ShowInEditor = false)]
 	[ChildRecord(10, typeof(Unit))]
 	[ChildRecord(11, typeof(Terrain))]
+	[ChildRecord(12, typeof(SpriteMap))]
 	public class EmpireRecord : Papyrus.DataTypes.Record
 	{
 	}

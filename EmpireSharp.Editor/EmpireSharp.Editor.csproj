@@ -55,7 +55,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.9\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.10\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -63,23 +63,26 @@
     </Reference>
     <Reference Include="Papyrus, Version=0.2.0.8, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.9\lib\net35\Papyrus.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.10\lib\net35\Papyrus.dll</HintPath>
+    </Reference>
+    <Reference Include="Papyrus.Design.Controls">
+      <HintPath>..\packages\Papyrus.Studio.0.2.0.6\lib\net40\Papyrus.Design.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Papyrus.Studio, Version=0.2.0.4, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.Studio.0.2.0.5\lib\net40\Papyrus.Studio.dll</HintPath>
+      <HintPath>..\packages\Papyrus.Studio.0.2.0.6\lib\net40\Papyrus.Studio.dll</HintPath>
     </Reference>
     <Reference Include="PropertyTools, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.9\lib\net35\PropertyTools.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.10\lib\net35\PropertyTools.dll</HintPath>
     </Reference>
     <Reference Include="PropertyTools.Wpf, Version=2013.1.1.1, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.Studio.0.2.0.5\lib\net40\PropertyTools.Wpf.dll</HintPath>
+      <HintPath>..\packages\Papyrus.Studio.0.2.0.6\lib\net40\PropertyTools.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net-patch, Version=2.0.0.480, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.9\lib\net35\protobuf-net-patch.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.10\lib\net35\protobuf-net-patch.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -126,6 +129,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\SpriteMapEditor\ViewModels\SpriteMapViewModel.cs" />
+    <Compile Include="Modules\SpriteMapEditor\Views\SpriteMapView.xaml.cs">
+      <DependentUpon>SpriteMapView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +150,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="..\License.licenseheader">
+      <Link>License.licenseheader</Link>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -158,6 +168,12 @@
       <Project>{ba5b9651-7940-4d13-bda7-d844b1c2bc18}</Project>
       <Name>EmpireSharp.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Modules\SpriteMapEditor\Views\SpriteMapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

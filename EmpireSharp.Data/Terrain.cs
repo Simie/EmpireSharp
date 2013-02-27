@@ -17,20 +17,20 @@ namespace EmpireSharp.Data
 	public class Terrain : EmpireRecord
 	{
 
-		private string _assetPath;
+		private RecordReference<SpriteMap> _spriteMap = RecordReference<SpriteMap>.Empty;
 
 		[RecordProperty(1)]
 		[PropertyTools.DataAnnotations.InputFilePath]
 		[Category("Graphics")]
-		[Description("Path to the asset for this terrain.")]
-		public string AssetPath
+		[Description("Sprite map containing tiles for this terrain.")]
+		public RecordReference<SpriteMap> SpriteMap
 		{
-			get { return _assetPath; }
+			get { return _spriteMap; }
 			set
 			{
-				ThrowIfReadOnly("AssetPath");
-				_assetPath = value;
-				RaisePropertyChanged("AssetPath");
+				ThrowIfReadOnly("SpriteMap");
+				_spriteMap = value;
+				RaisePropertyChanged("SpriteMap");
 			}
 		}
 
