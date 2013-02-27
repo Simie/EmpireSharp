@@ -31,15 +31,66 @@ namespace EmpireSharp.Simulation.Entities
 		/// </summary>
 		public Transform Transform;
 
+		#region Unit Attributes
+
+		public Fix16 MoveSpeed { get; internal set; }
+
+		#endregion
+
+		/// <summary>
+		/// Active behaviour applied to this unit.
+		/// </summary>
+		internal Behaviours.Behaviour ActiveBehaviour { get; private set; }
+
+		/// <summary>
+		/// The behaviour that this unit will default to if no other behaviour is set. (Stand Ground, Patrol etc)
+		/// </summary>
+		internal Behaviours.Behaviour IdleBehaviour { get; private set; }
+
 		[Inject]
 		protected Terrain Terrain { get; set; }
+
+		public Unit()
+		{
+			// Debug data for units TODO: Load unit data from papyrus
+			MoveSpeed = (Fix16)0.2f;
+		}
 
 		public override void Tick()
 		{
 
 			base.Tick();
 
-			Transform.Position += new FixedVector2((Fix16)0.1, (Fix16)0) * Time.TimeStep;
+			if (ActiveBehaviour != null) {
+
+				ActiveBehaviour.Tick();
+
+				if (ActiveBehaviour.IsCompleted)
+					ActiveBehaviour = null; // TODO: Dispose of this somehow? Maybe recycle?
+
+			} else if (IdleBehaviour != null) {
+				
+				IdleBehaviour.Tick();
+
+			}
+
+		}
+
+		internal void SetBehaviour(Behaviours.Behaviour behaviour)
+		{
+
+			if(ActiveBehaviour != null)
+				ActiveBehaviour.Cancel();
+
+			ActiveBehaviour = behaviour;
+			ActiveBehaviour.Init(this);
+
+		}
+
+		internal void SetIdleBehaviour(Behaviours.Behaviour behaviour)
+		{
+
+			IdleBehaviour = behaviour;
 
 		}
 

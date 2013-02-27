@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviours\Behaviour.cs" />
+    <Compile Include="Behaviours\MoveBehaviour.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\MoveCommand.cs" />
     <Compile Include="DataService.cs" />

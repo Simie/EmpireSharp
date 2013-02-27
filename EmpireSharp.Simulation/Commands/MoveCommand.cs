@@ -8,6 +8,7 @@
 */
 
 using System;
+using EmpireSharp.Simulation.Behaviours;
 using EmpireSharp.Simulation.Entities;
 
 namespace EmpireSharp.Simulation.Commands
@@ -35,7 +36,7 @@ namespace EmpireSharp.Simulation.Commands
 			if(unit == null)
 				throw new Exception("Expected a Unit as the target for MoveCommand, got " + EntityContainer[TargetID] + " instead.");
 
-			unit.Transform.Position = TargetPosition;
+			unit.SetBehaviour(new MoveBehaviour(TargetPosition));
 
 		}
 
