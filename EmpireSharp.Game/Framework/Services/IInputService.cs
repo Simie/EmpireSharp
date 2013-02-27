@@ -32,7 +32,12 @@ namespace EmpireSharp.Game.Framework.Services
 
 		event EventHandler<KeyboardEventArgs> KeyPressed; 
 
-		event EventHandler<KeyboardEventArgs> KeyReleased; 
+		event EventHandler<KeyboardEventArgs> KeyReleased;
+
+		/// <summary>
+		/// Amount the mouse wheel has moved since the last frame.
+		/// </summary>
+		int MouseWheelDelta { get; }
 
 		/// <summary>
 		/// Was the key pressed during this update.

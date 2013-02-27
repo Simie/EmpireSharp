@@ -9,6 +9,7 @@
 
 using System.ComponentModel;
 using Papyrus;
+using Papyrus.DataTypes;
 
 namespace EmpireSharp.Data
 {
@@ -20,7 +21,6 @@ namespace EmpireSharp.Data
 		private RecordReference<SpriteMap> _spriteMap = RecordReference<SpriteMap>.Empty;
 
 		[RecordProperty(1)]
-		[PropertyTools.DataAnnotations.InputFilePath]
 		[Category("Graphics")]
 		[Description("Sprite map containing tiles for this terrain.")]
 		public RecordReference<SpriteMap> SpriteMap
@@ -34,35 +34,33 @@ namespace EmpireSharp.Data
 			}
 		}
 
-		private int _tileWidth;
+		private Color _fallbackColor;
 
 		[RecordProperty(2)]
 		[Category("Graphics")]
-		[PropertyTools.DataAnnotations.Spinnable(Minimum = 1)]
-		public int TileWidth
+		public Color FallbackColor
 		{
-			get { return _tileWidth; }
+			get { return _fallbackColor; }
 			set
 			{
-				ThrowIfReadOnly("TileWidth");
-				_tileWidth = value;
-				RaisePropertyChanged("TileWidth");
+				ThrowIfReadOnly("FallbackColor");
+				_fallbackColor = value;
+				RaisePropertyChanged("FallbackColor");
 			}
 		}
 
-		private int _tileHeight;
+		private Color _mapColor;
 
 		[RecordProperty(3)]
 		[Category("Graphics")]
-		[PropertyTools.DataAnnotations.Spinnable(Minimum = 1)]
-		public int TileHeight
+		public Color MapColor
 		{
-			get { return _tileHeight; }
+			get { return _mapColor; }
 			set
 			{
-				ThrowIfReadOnly("TileHeight");
-				_tileHeight = value;
-				RaisePropertyChanged("TileHeight");
+				ThrowIfReadOnly("MapColor");
+				_mapColor = value;
+				RaisePropertyChanged("MapColor");
 			}
 		}
 

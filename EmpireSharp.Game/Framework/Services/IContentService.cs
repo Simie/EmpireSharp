@@ -19,5 +19,6 @@ namespace EmpireSharp.Game.Framework.Services
 
 		Texture2D GetTexture(string assetPath);
 
+		SpriteFont GetFont(string assetPath);
 	}
 }

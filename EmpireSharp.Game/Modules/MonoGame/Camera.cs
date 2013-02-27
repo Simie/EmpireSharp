@@ -20,22 +20,32 @@ namespace EmpireSharp.Game.Modules.MonoGame
 	{
 
 		private Vector2 _simulationPosition = Vector2.Zero;
-		private Matrix _simulationTransform;
+		private Matrix _transform;
 		private Matrix _inverseTransform;
-		private float _scale;
+		private float _zoom = 1;
 
-		private Matrix _directionTransform = Matrix.CreateRotationZ(MathHelper.PiOver4);
-		private Matrix _inverseDirectionTransform = Matrix.Invert(Matrix.CreateRotationZ(MathHelper.PiOver4));
-
+		private Rectangle _screenRect;
 		public bool IsDirty { get; set; }
 
+		public Rectangle Screen 
+		{ 
+			set {
+				_screenRect = value;
+				IsDirty = true; 
+			}
+			get { return _screenRect; }
+		}
+
+		/// <summary>
+		/// Transform from the simulation space to world space.
+		/// </summary>
 		public Matrix Transform
 		{
 			get
 			{
 				if (IsDirty)
 					Rebuild();
-				return _simulationTransform;
+				return _transform;
 			}
 		}
 
@@ -49,13 +59,6 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			}
 		}
 
-		public Matrix DirectionTransform
-		{
-			get { return _directionTransform; }
-		}
-
-		public Matrix InverseDirectionTransform { get { return _inverseDirectionTransform; } }
-
 		/// <summary>
 		/// Position of the camera in simulation space.
 		/// </summary>
@@ -64,55 +67,45 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			get { return _simulationPosition; }
 			set { 
+
 				_simulationPosition = value;
 				IsDirty = true;
+
 			}
 
 		}
 
-		public float Scale
+		public float Zoom
 		{
-			get { return _scale; }
-			set { 
-				_scale = value;
+			get { return _zoom; }
+			set {
+				_zoom = MathHelper.Clamp(value, 0.001f, float.MaxValue);
 				IsDirty = true;
 			}
 		}
 
-		public Vector2 TransformSimulationToView(Vector2 position)
+		public Vector2 TransformWorldtoScreen(Vector2 position)
 		{
 			return Vector2.Transform(position, Transform);
 		}
 	
-		public Vector2 TransformViewToSimulation(Vector2 position)
+		public Vector2 TransformScreenToWorld(Vector2 position)
 		{
 			return Vector2.Transform(position, InverseTransform);
-		}
-
-		public Vector2 TransformSimulationDirectionToView(Vector2 direction)
-		{
-			Vector2.Transform(ref direction, ref _directionTransform, out direction);
-			return direction;
-		}
-
-		public Vector2 TransformViewDirectionToSimulation(Vector2 direction)
-		{
-			Vector2.Transform(ref direction, ref _inverseDirectionTransform, out direction);
-			return direction;
 		}
 
 		public void Rebuild()
 		{
 
-			var matrix = Matrix.Identity;
+			var viewMatrix = Matrix.Identity;
+			var cameraPos = Translate.SimulationPointToWorld(SimulationPosition);
+			viewMatrix *= Matrix.CreateTranslation(cameraPos.X, cameraPos.Y, 0);
+			viewMatrix *= Matrix.CreateScale(Zoom);
+			viewMatrix *= Matrix.CreateTranslation(Screen.Width*0.5f, Screen.Height*0.5f, 0);
 
-			matrix *= Matrix.CreateTranslation(SimulationPosition.X, SimulationPosition.Y, 0);
-			matrix *= Matrix.CreateScale(Scale);
-			matrix *= DirectionTransform;
-			matrix *= Matrix.CreateScale(1.0f, 0.5f, 1.0f);
+			_transform = viewMatrix;
+			Matrix.Invert(ref _transform, out _inverseTransform);
 
-			_simulationTransform = matrix;
-			Matrix.Invert(ref _simulationTransform, out _inverseTransform);
 			IsDirty = false;
 
 		}

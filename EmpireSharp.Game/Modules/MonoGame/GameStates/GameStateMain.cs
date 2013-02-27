@@ -7,6 +7,7 @@
 *
 */
 
+using System;
 using EmpireSharp.Game.Framework.Services;
 using EmpireSharp.Simulation;
 using EmpireSharp.Simulation.Commands;
@@ -40,6 +41,10 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 		[Inject]
 		IInputService Input { get; set; }
 
+		private SpriteFont _debugFont;
+
+		private Vector2 _mouseSimPos;
+
 		[Inject]
 		public GameStateMain(IContentService content, IKernel ioc)
 		{
@@ -51,8 +56,10 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 			_terrainRenderer.Init(_simulation.Terrain);
 
 			_camera = new Camera();
-			_camera.Scale = 62;
+			_camera.Zoom = 1;
 			_camera.Rebuild();
+
+			_debugFont = content.GetFont("Assets/Fonts/Orbitron");
 
 		}
 
@@ -61,15 +68,19 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 		public void Update(float dt)
 		{
 
+			_camera.Screen = new Rectangle(0, 0, Shell.Width, Shell.Height);
+
 			var mouseState = Mouse.GetState();
 			var keyState = Keyboard.GetState();
+
+			_mouseSimPos = Translate.WorldPointToSimulation(_camera.TransformScreenToWorld(new Vector2(mouseState.X, mouseState.Y)));
 
 			if (mouseState.LeftButton == ButtonState.Pressed) {
 
 				if (!_prevPressed) {
 
 
-					var simPoint = _camera.TransformViewToSimulation(new Vector2(mouseState.X, mouseState.Y));
+					var simPoint = _mouseSimPos;
 
 					_simulation.QueueCommand(new MoveCommand(1, 0, new FixedVector2((Fix16)simPoint.X, (Fix16)simPoint.Y)));
 					_prevPressed = true;
@@ -105,11 +116,13 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 				cameraMoveDirection.Normalize();
 				cameraMoveDirection.Y *= 2;
 
-				var simDirection = _camera.TransformViewDirectionToSimulation(cameraMoveDirection);
+				var simDirection = Translate.WorldDirectionToSimulation(cameraMoveDirection);
 
 				_camera.SimulationPosition += simDirection * dt * scrollSpeed;
 
 			}
+
+			_camera.Zoom -= Input.MouseWheelDelta * dt * 0.01f;
 
 			_simulation.Tick();
 
@@ -126,7 +139,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			var entities = _simulation.EntityContainer.Entities;
 
-			game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+			game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, _camera.Transform);
 
 			foreach (var baseEntity in entities) {
 
@@ -136,15 +149,31 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 					var pos = new Vector2((float)unit.Transform.Position.X, (float)unit.Transform.Position.Y);
 
-					pos = _camera.TransformSimulationToView(pos);
+					pos = Translate.SimulationPointToWorld(pos);
 
 					game.SpriteBatch.Draw(game.WhitePixelTex,
-					                      new Rectangle((int) pos.X - 1,
-					                                    (int) pos.Y - 1, 2, 2), new Rectangle(0, 0, 1, 1),
+					                      new Rectangle((int) pos.X - 30,
+					                                    (int) pos.Y - 30, 60, 60), new Rectangle(0, 0, 1, 1),
 					                      Color.Red);
 
 				}
 			}
+
+			game.SpriteBatch.End();
+
+			var entity0 = entities[0] as Unit;
+
+			game.SpriteBatch.Begin();
+
+			var debugString = String.Format("{0,-25} {1,-25}", 
+				string.Format("Camera Pos: {0}", _camera.SimulationPosition.ShortString()),
+				string.Format("Mouse Pos: {0}", _mouseSimPos.ShortString()),
+				entity0.Transform.Position.ShortString(), _camera.Zoom.ToString("0.00"));
+
+			game.SpriteBatch.DrawString(_debugFont, string.Format("Camera Pos: {0}", _camera.SimulationPosition.ShortString()), new Vector2(10, 10), Color.White);
+			game.SpriteBatch.DrawString(_debugFont, string.Format("Mouse Pos: {0}", _mouseSimPos.ShortString()), new Vector2(260, 10), Color.White);
+			game.SpriteBatch.DrawString(_debugFont, string.Format("Zoom: {0}", _camera.Zoom.ToString("0.00")), new Vector2(500, 10), Color.White);
+			game.SpriteBatch.DrawString(_debugFont, string.Format("Entity0: {0}", entity0.Transform.Position.ShortString()), new Vector2(10, 30), Color.White);
 
 			game.SpriteBatch.End();
 

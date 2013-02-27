@@ -7,7 +7,7 @@
       "Index": 0,
       "Source": "Test Data"
     },
-    "TileWidth": 97,
-    "TileHeight": 49
+    "FallbackColor": "151, 72, 6, 255",
+    "MapColor": "151, 72, 6, 255"
   }
 }

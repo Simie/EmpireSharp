@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using EmpireSharp.Game.Framework.Services;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Ninject;
 using Papyrus;
@@ -28,6 +29,8 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		public RecordDatabase Database { get; private set; }
 
 		private Dictionary<string, Texture2D> _texCache = new Dictionary<string, Texture2D>();
+
+		private ContentManager _contentManager;
 
 		[Inject]
 		IShell Shell { get; set; }
@@ -48,6 +51,8 @@ namespace EmpireSharp.Game.Modules.MonoGame
 				Color.Black, Color.Magenta, Color.Black,
 				Color.Magenta, Color.Black, Color.Magenta
 			});
+
+			_contentManager = ((Shell) shell).Content;
 
 		}
 
@@ -111,6 +116,13 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			}
 
 			return ret;
+
+		}
+
+		public SpriteFont GetFont(string assetPath)
+		{
+
+			return _contentManager.Load<SpriteFont>(assetPath);
 
 		}
 

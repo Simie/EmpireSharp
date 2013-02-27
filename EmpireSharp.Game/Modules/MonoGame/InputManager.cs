@@ -30,7 +30,21 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		/// Keyboard state from the last frame.
 		/// </summary>
 		public KeyboardState PreviousKeyboardState { get; private set; }
+	
+		/// <summary>
+		/// Keyboard state during this frame.
+		/// </summary>
+		public MouseState MouseState { get; private set; }
 
+		/// <summary>
+		/// Keyboard state from the last frame.
+		/// </summary>
+		public MouseState PreviousMouseState { get; private set; }
+
+		/// <summary>
+		/// Amount the mouse wheel has moved since the last frame.
+		/// </summary>
+		public int MouseWheelDelta { get; private set; }
 
 		public bool IsKeyPressed(Keys key)
 		{
@@ -57,6 +71,11 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			PreviousKeyboardState = KeyboardState;
 			KeyboardState = Keyboard.GetState();
+
+			PreviousMouseState = MouseState;
+			MouseState = Mouse.GetState();
+
+			MouseWheelDelta = PreviousMouseState.ScrollWheelValue - MouseState.ScrollWheelValue;
 
 			EventUpdate();
 
