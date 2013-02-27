@@ -45,6 +45,8 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 		private Vector2 _mouseSimPos;
 
+		private float _targetZoom;
+
 		[Inject]
 		public GameStateMain(IContentService content, IKernel ioc)
 		{
@@ -57,6 +59,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			_camera = new Camera();
 			_camera.Zoom = 1;
+			_targetZoom = 1;
 			_camera.Rebuild();
 
 			_debugFont = content.GetFont("Assets/Fonts/Orbitron");
@@ -122,7 +125,13 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			}
 
-			_camera.Zoom -= Input.MouseWheelDelta * dt * 0.01f;
+			_targetZoom -= Input.MouseWheelDelta * dt * 0.01f;
+
+			_targetZoom = MathHelper.Clamp(_targetZoom, 0.1f, 1.2f);
+
+			_camera.Zoom -= (_camera.Zoom - _targetZoom)*dt * 6;
+
+			//_camera.Zoom -= 
 
 			_simulation.Tick();
 
@@ -171,8 +180,8 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 				entity0.Transform.Position.ShortString(), _camera.Zoom.ToString("0.00"));
 
 			game.SpriteBatch.DrawString(_debugFont, string.Format("Camera Pos: {0}", _camera.SimulationPosition.ShortString()), new Vector2(10, 10), Color.White);
-			game.SpriteBatch.DrawString(_debugFont, string.Format("Mouse Pos: {0}", _mouseSimPos.ShortString()), new Vector2(260, 10), Color.White);
-			game.SpriteBatch.DrawString(_debugFont, string.Format("Zoom: {0}", _camera.Zoom.ToString("0.00")), new Vector2(500, 10), Color.White);
+			game.SpriteBatch.DrawString(_debugFont, string.Format("Mouse Pos: {0}", _mouseSimPos.ShortString()), new Vector2(300, 10), Color.White);
+			game.SpriteBatch.DrawString(_debugFont, string.Format("Zoom: {0}", _camera.Zoom.ToString("0.00")), new Vector2(620, 10), Color.White);
 			game.SpriteBatch.DrawString(_debugFont, string.Format("Entity0: {0}", entity0.Transform.Position.ShortString()), new Vector2(10, 30), Color.White);
 
 			game.SpriteBatch.End();
