@@ -54,6 +54,7 @@ namespace EmpireSharp.Simulation.Behaviours
 			}
 
 			Unit.Transform.Position += destDirection*moveStep;
+			Unit.Transform.Rotation = destDirection.Angle();
 
 		}
 

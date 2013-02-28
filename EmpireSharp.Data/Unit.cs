@@ -6,10 +6,8 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using FixMath.NET;
 using Papyrus;
 
 namespace EmpireSharp.Data
@@ -30,6 +28,20 @@ namespace EmpireSharp.Data
 				ThrowIfReadOnly("Name");
 				_name = value;
 				RaisePropertyChanged("Name");
+			}
+		}
+
+		private Fix16 _moveSpeed;
+
+		[RecordProperty(2)]
+		public Fix16 MoveSpeed
+		{
+			get { return _moveSpeed; }
+			set
+			{
+				ThrowIfReadOnly("MoveSpeed");
+				_moveSpeed = value;
+				RaisePropertyChanged("MoveSpeed");
 			}
 		}
 

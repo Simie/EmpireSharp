@@ -1,0 +1,11 @@
+﻿{
+  "Location": "Test Data",
+  "Index": 0,
+  "Record": {
+    "ID": "unit_test",
+    "Name": "Test Unit",
+    "MoveSpeed": {
+      "FixedValue": 0
+    }
+  }
+}

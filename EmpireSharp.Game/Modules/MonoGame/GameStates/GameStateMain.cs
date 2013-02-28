@@ -177,7 +177,8 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 			game.SpriteBatch.DrawString(_debugFont, string.Format("Camera Pos: {0}", _camera.SimulationPosition.ShortString()), new Vector2(10, 10), Color.White);
 			game.SpriteBatch.DrawString(_debugFont, string.Format("Mouse Pos: {0}", _mouseSimPos.ShortString()), new Vector2(300, 10), Color.White);
 			game.SpriteBatch.DrawString(_debugFont, string.Format("Zoom: {0}", _camera.Zoom.ToString("0.00")), new Vector2(620, 10), Color.White);
-			game.SpriteBatch.DrawString(_debugFont, string.Format("Entity0: {0}", entity0.Transform.Position.ShortString()), new Vector2(10, 30), Color.White);
+			game.SpriteBatch.DrawString(_debugFont, string.Format("Entity0 Pos: {0}", entity0.Transform.Position.ShortString()), new Vector2(10, 30), Color.White);
+			game.SpriteBatch.DrawString(_debugFont, string.Format("Entity0: {0}", entity0.Transform.Rotation), new Vector2(10, 50), Color.White);
 
 			game.SpriteBatch.End();
 

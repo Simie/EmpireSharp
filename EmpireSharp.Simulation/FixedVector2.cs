@@ -82,6 +82,25 @@ namespace EmpireSharp.Simulation
 
 		#region Public Methods
 
+		public Fix16 Angle()
+		{
+			return AngleBetween(this, UnitX);
+		}
+
+		public static FixedVector2 FromAngle(Fix16 angle)
+		{
+			FixedVector2 direction = FixedVector2.Zero;
+			direction.X = Fix16.Cos(angle);
+			direction.Y = Fix16.Sin(angle);
+			return direction;
+		}
+
+		public static Fix16 AngleBetween(FixedVector2 v1, FixedVector2 v2)
+		{
+			var dot = Dot(v1, v2);
+			return Fix16.Acos(dot);
+		}
+
 		public static FixedVector2 Add(FixedVector2 value1, FixedVector2 value2)
 		{
 			value1.X += value2.X;
