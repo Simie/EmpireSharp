@@ -33,6 +33,8 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		[Inject]
 		public IShell Shell { get; private set; }
+
+		private GraphicsDevice _graphicsDevice;
  
 		public void Init(Simulation.Terrain terrain)
 		{
@@ -41,14 +43,17 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			_blank = Content.GetTexture("Assets/Terrain/blank.png");
 
-			/*_terrainLookup = new List<Texture2D>();
+			_terrainLookup = new List<Texture2D>();
 
 			for (int i = 0; i < _terrain.TerrainTypes.Count; i++) {
 
 				var t = _terrain.TerrainTypes[i];
 				_terrainLookup.Add(Content.GetTexture(t.SpriteMap.Value.AssetPath));
 
-			}*/
+			}
+
+			_graphicsDevice = _blank.GraphicsDevice;
+
 
 		}
 
@@ -60,7 +65,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			var sb = ((Shell) Shell).SpriteBatch;
 
-			sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, camera.Transform);
+			sb.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearClamp, null, null, null, camera.Transform);
 
 			var size = _terrain.Size;
 
@@ -71,13 +76,17 @@ namespace EmpireSharp.Game.Modules.MonoGame
 					var tile = _terrain.At(i, j);
 					var type = _terrain.TerrainTypes[tile.TypeID];
 
-					var color = Color.FromNonPremultiplied(type.FallbackColor.R, type.FallbackColor.G, type.FallbackColor.B, type.FallbackColor.A);
+					var color = Color.FromNonPremultiplied(100 + (i*50)%155, 100 + (j*50)%155, 255, 255);
 
-					Rectangle? sourceRect = null;
+					int indice = 0;
 
-					var targetPosition = Translate.SimulationPointToWorld(new Vector2(i + 0.5f, j + 0.5f));
+					Rectangle? sourceRect = TileSourceRect(ref type, i, j, out indice);
 
-					sb.Draw(_blank, new Rectangle((int)(targetPosition.X - tileWidth * 0.5f), (int)(targetPosition.Y - tileHeight * 0.5f), tileWidth, tileHeight), sourceRect, color);
+					var targetPosition = Translate.SimulationPointToWorld(new Vector2(i, j));
+
+					sb.Draw(_terrainLookup[tile.TypeID], targetPosition, sourceRect, color, 0, new Vector2(tileWidth, 0) * 0.5f, 1, SpriteEffects.None, 0.1f);
+
+					//sb.DrawString(Content.DebugFont, indice.ToString(), new Vector2(targetPosition.X, targetPosition.Y), Color.Black, 0, new Vector2(12, 12), 1, SpriteEffects.None, 1);
 
 				}
 
@@ -87,19 +96,18 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		}
 
-#if false
-
-		public Rectangle TileSourceRect(int tileType, int x, int y, ref Texture2D tex)
+		public Rectangle TileSourceRect(ref EmpireSharp.Data.Terrain type, int x, int y, out int indice)
 		{
 
-			var type = _terrain.TerrainTypes[tileType];
 			var spriteMap = type.SpriteMap.Value;
 
-			var tileCount = spriteMap.Items.Count;
+			var i = type.MapSize;
 
-			
+			var dx = x%i;
+			var dy = y%i;
 
-			int indice = ((x & 3) + (y & 3)) % tileCount;
+			indice = dy + dx * i;
+			//indice = 0;
 
 			var s = indice.ToString();
 			var tile = spriteMap.Items.FirstOrDefault(p => p.ID == s);
@@ -110,8 +118,6 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			return new Rectangle(tile.Rect.X, tile.Rect.Y, tile.Rect.Width, tile.Rect.Height);
 
 		}
-
-#endif
 
 
 	}

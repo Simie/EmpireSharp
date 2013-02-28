@@ -89,7 +89,6 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			WhitePixelTex = new Texture2D(GraphicsDevice, 1,1);
 			WhitePixelTex.SetData(new Color[] {Color.White});
 
-
 		}
 
 		/// <summary>

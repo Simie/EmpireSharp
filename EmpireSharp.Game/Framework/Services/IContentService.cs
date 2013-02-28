@@ -16,6 +16,7 @@ namespace EmpireSharp.Game.Framework.Services
 	{
 
 		RecordDatabase Database { get; }
+		SpriteFont DebugFont { get; }
 
 		Texture2D GetTexture(string assetPath);
 

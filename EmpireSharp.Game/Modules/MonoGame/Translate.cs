@@ -23,12 +23,20 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		static Translate()
 		{
 
-			_transform = Matrix.Identity;
+			Rebuild();
 
-			//_transform *= Matrix.CreateTranslation(SimulationPosition.X, SimulationPosition.Y, 0);
-			_transform *= Matrix.CreateScale(62);
+		}
+
+		public static void Rebuild()
+		{
+
+			_transform = Matrix.Identity;
+			const float scale = 67.7f;
+			_transform *= Matrix.CreateScale(scale, scale, 1f);
 			_transform *= _directionTransform;
-			_transform *= Matrix.CreateScale(1.0f, 0.5f, 1.0f);
+			_transform *= Matrix.CreateScale(1.0f, 0.5f, 1);
+			//_transform *= Matrix.CreateScale(48.5f, 24.5f, 1.0f); // Scale by half size of a tile
+
 
 			_inverseTransform = Matrix.Invert(_transform);
 
@@ -36,6 +44,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		public static Vector2 SimulationPointToWorld(Vector2 vec)
 		{
+			Rebuild();
 			return Vector2.Transform(vec, _transform);
 		}
 

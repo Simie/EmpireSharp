@@ -64,6 +64,22 @@ namespace EmpireSharp.Data
 			}
 		}
 
+		private int _mapSize;
+
+		[RecordProperty(4)]
+		[Category("Graphics")]
+		[PropertyTools.DataAnnotations.Spinnable(Minimum = 1)]
+		public int MapSize
+		{
+			get { return _mapSize; }
+			set
+			{
+				ThrowIfReadOnly("MapSize");
+				_mapSize = value;
+				RaisePropertyChanged("MapSize");
+			}
+		}
+
 	}
 
 }

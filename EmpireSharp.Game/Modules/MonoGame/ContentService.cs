@@ -40,6 +40,8 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		private Texture2D _errorTex;
 
+		public SpriteFont DebugFont { get; private set; }
+
 		[Inject]
 		public ContentService(IShell shell)
 		{
@@ -53,6 +55,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			});
 
 			_contentManager = ((Shell) shell).Content;
+
 
 		}
 
@@ -72,6 +75,9 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			var plugins = Papyrus.PluginUtilities.PluginsInDirectory(ContentDirectory);
 
 			Database = new RecordDatabase(plugins.Select(p => p.SourceFile).ToList());
+
+
+			DebugFont = GetFont("Assets/Fonts/Orbitron");
 
 		}
 
@@ -98,6 +104,17 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 					using (var f = File.OpenRead(path))
 						ret = Texture2D.FromStream(((Shell) Shell).GraphicsDevice, f);
+
+					var mip = new Texture2D(ret.GraphicsDevice, ret.Width, ret.Height, true, ret.Format);
+
+					byte[] data = new byte[mip.Width * mip.Height * 4];
+					ret.GetData(0, ret.Bounds, data, 0, data.Length);
+					mip.SetData(0, ret.Bounds, data, 0, data.Length);
+
+					ret.Dispose();
+
+					ret = mip;
+
 
 				} catch (Exception e) {
 					

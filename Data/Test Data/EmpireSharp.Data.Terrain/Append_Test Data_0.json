@@ -8,6 +8,7 @@
       "Source": "Test Data"
     },
     "FallbackColor": "151, 72, 6, 255",
-    "MapColor": "151, 72, 6, 255"
+    "MapColor": "151, 72, 6, 255",
+    "MapSize": 10
   }
 }
