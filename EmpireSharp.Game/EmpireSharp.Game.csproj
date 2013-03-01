@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\WindowsGL\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WINDOWS;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -41,10 +41,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Framework\Services\IInputService.cs" />
+    <Compile Include="Modules\MonoGame\BasicShapes.cs" />
     <Compile Include="Modules\MonoGame\Camera.cs" />
     <Compile Include="Framework\Services\ILog.cs" />
     <Compile Include="Modules\MonoGame\InputManager.cs" />
     <Compile Include="Modules\MonoGame\LogService.cs" />
+    <Compile Include="Modules\MonoGame\PrimitiveBatch.cs" />
     <Compile Include="Modules\MonoGame\Shell.cs" />
     <Compile Include="Modules\MonoGame\GameStates\GameStateMain.cs" />
     <Compile Include="Modules\MonoGame\TileBatcher.cs" />

@@ -14,6 +14,7 @@ using EmpireSharp.Data;
 using EmpireSharp.Game.Framework.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Ninject;
 
 namespace EmpireSharp.Game.Modules.MonoGame
@@ -35,10 +36,17 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		[Inject]
 		public IShell Shell { get; private set; }
 
+		[Inject]
+		public IInputService Input { get; private set; }
+
 		private GraphicsDevice _graphicsDevice;
 
 		public TileBatcher TileBatch;
+		PrimitiveBatch _debugBatch;
+		
 
+
+		private Rectangle _cullingRect;
 
 		public void Init(Simulation.Terrain terrain)
 		{
@@ -59,7 +67,8 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			_graphicsDevice = _blank.GraphicsDevice;
 	
-			TileBatch = new TileBatcher(_blank.GraphicsDevice, _test);
+			TileBatch = new TileBatcher(_blank.GraphicsDevice);
+			_debugBatch = new PrimitiveBatch(_blank.GraphicsDevice, 16);
 
 			TileBatch.SetTileWidth(97);
 
@@ -72,6 +81,21 @@ namespace EmpireSharp.Game.Modules.MonoGame
 				(0, _graphicsDevice.Viewport.Width,
 				_graphicsDevice.Viewport.Height, 0,
 				0, 1);
+
+			// For culling, ignore camera zoom.
+			var zoom = camera.Zoom;
+			camera.Zoom = 1;
+
+			var topLeft = camera.TransformScreenToWorld(new Vector2(0,0));
+			var bottomRight = camera.TransformScreenToWorld(new Vector2(_graphicsDevice.Viewport.Width, _graphicsDevice.Viewport.Height));
+
+			camera.Zoom = zoom;
+
+			var cullSize = bottomRight - topLeft;
+			var inflateSize = new Vector2(97, 41);
+
+			_cullingRect = new Rectangle((int)topLeft.X, (int)topLeft.Y, (int)cullSize.X, (int)cullSize.Y);
+			_cullingRect.Inflate((int)inflateSize.X, (int)inflateSize.Y);
 
 			TileBatch.Begin(camera.Transform, proj);
 
@@ -89,11 +113,63 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			
 			TileBatch.End();
 
+			// Debug Culling Rect
+			{
+
+				var cullTopLeft = camera.TransformWorldtoScreen(new Vector2(_cullingRect.Left, _cullingRect.Top));
+				var cullBottomRight = camera.TransformWorldtoScreen(new Vector2(_cullingRect.Right, _cullingRect.Bottom));
+
+				var cullTopRight = new Vector2(cullBottomRight.X, cullTopLeft.Y);
+				var cullBottomLeft = new Vector2(cullTopLeft.X, cullBottomRight.Y);
+
+				_debugBatch.Begin(proj, Matrix.Identity);
+
+				BasicShapes.DrawPolygon(_debugBatch, new Vector2[4] {cullTopLeft, cullTopRight, cullBottomRight, cullBottomLeft}, 4, Color.Blue);
+
+				var viewTopLeft = camera.TransformWorldtoScreen(topLeft);
+				var viewBotRight = camera.TransformWorldtoScreen(bottomRight);
+
+				var viewTopRight = new Vector2(viewBotRight.X, viewTopLeft.Y);
+				var viewBotLeft = new Vector2(viewTopLeft.X, viewBotRight.Y);
+
+				BasicShapes.DrawPolygon(_debugBatch, new Vector2[4] {viewTopLeft, viewTopRight, viewBotRight, viewBotLeft}, 4, Color.Red);
+
+
+				_debugBatch.End();
+
+
+			}
+
+			if (!Input.IsKeyDown(Keys.LeftShift))
+				return;
+
+			var spriteBatch = ((Shell)Shell).SpriteBatch;
+
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null, camera.Transform);
+
+			for (int i = 0; i < size; i++) {
+
+				for (int j = 0; j < size; j++) {
+
+					DrawTileDebug(i, j, spriteBatch);
+
+				}
+
+			}
+
+			spriteBatch.End();
+
+
 		}
 
 
 		private void DrawTile(int x, int y)
 		{
+
+			var targetPosition = Translate.SimulationPointToWorld(new Vector2(x + 0.5f, y + 0.5f));
+
+			if(!_cullingRect.Contains((int)targetPosition.X, (int)targetPosition.Y))
+				return;
 
 			var tile = _terrain.At(x, y);
 			var type = _terrain.TerrainTypes[tile.TypeID];
@@ -104,12 +180,28 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			Rectangle? sourceRect = TileSourceRect(ref type, x, y, out indice);
 
+			TileBatch.DrawTile(_terrainLookup[tile.TypeID], targetPosition, sourceRect.Value);
+
+
+		}
+
+		private void DrawTileDebug(int x, int y, SpriteBatch batch)
+		{
+
 			var targetPosition = Translate.SimulationPointToWorld(new Vector2(x + 0.5f, y + 0.5f));
 
-			//_primitiveBatch.Begin(PrimitiveType.TriangleList);
+			if(!_cullingRect.Contains((int)targetPosition.X, (int)targetPosition.Y))
+				return;
 
-			TileBatch.DrawTile(null, targetPosition, Rectangle.Empty);
+			var tile = _terrain.At(x, y);
+			var type = _terrain.TerrainTypes[tile.TypeID];
 
+			var color = Color.FromNonPremultiplied(100 + (x * 50) % 155, 100 + (y * 50) % 155, 255, 255);
+
+			int indice = TileIndice(x,y, type.MapSize);
+
+			var debug = x + ", " + y + "\n" + indice.ToString();
+			batch.DrawString(Content.DebugFont, debug, targetPosition, Color.White, 0, Content.DebugFont.MeasureString(debug) * 0.5f, 0.8f, SpriteEffects.None, 0);
 
 		}
 
@@ -118,13 +210,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			var spriteMap = type.SpriteMap.Value;
 
-			var i = type.MapSize;
-
-			var dx = x%i;
-			var dy = y%i;
-
-			indice = dy + dx * i;
-			//indice = 0;
+			indice = TileIndice(x, y, type.MapSize);
 
 			var s = indice.ToString();
 			var tile = spriteMap.Items.FirstOrDefault(p => p.ID == s);
@@ -134,6 +220,14 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			return new Rectangle(tile.Rect.X, tile.Rect.Y, tile.Rect.Width, tile.Rect.Height);
 
+		}
+
+#if NET45
+		[System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+#endif
+		public static int TileIndice(int x, int y, int mapSize)
+		{
+			return (y % mapSize) + (x % mapSize) * mapSize;
 		}
 
 

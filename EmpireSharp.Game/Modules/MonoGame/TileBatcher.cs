@@ -32,11 +32,10 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		private Vector3 _vertexMult = new Vector3(1);
 
-		private Texture2D _hack;
-
 		private int _tileCount;
 		private int _drawCalls;
 
+		private Texture2D _activeTexture;
 
 		/// <summary>
 		/// Number of tiles drawn during the last Begin/End cycle.
@@ -54,7 +53,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			get { return _drawCalls; }
 		}
 
-		public TileBatcher(GraphicsDevice graphics, Texture2D hack, int batchSize = 40)
+		public TileBatcher(GraphicsDevice graphics, int batchSize = 600)
 		{
 
 			if(graphics == null)
@@ -66,8 +65,6 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			_effect = new BasicEffect(GraphicsDevice);
 
 			SetBatchSize(batchSize);
-
-			_hack = hack;
 
 		}
 
@@ -100,6 +97,11 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			if (_vertexPosition >= _vertexBuffer.Length)
 				Flush();
 
+			if(tex != _activeTexture && _activeTexture != null)
+				Flush();
+
+			_activeTexture = tex;
+
 			var position = new Vector3(pos, 0);
 
 			int top = _vertexPosition++;
@@ -112,10 +114,16 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			_vertexBuffer[bottom].Position = position + new Vector3(0f, 0.25f, 0f) * _vertexMult;
 			_vertexBuffer[left].Position = position + new Vector3(-0.5f, 0f, 0f) * _vertexMult;
 
-			_vertexBuffer[top].TextureCoordinate = new Vector2(0.5f, 0f); 
-			_vertexBuffer[right].TextureCoordinate = new Vector2(1.0f, 0.5f);
-			_vertexBuffer[bottom].TextureCoordinate = new Vector2(0.5f, 1.0f);
-			_vertexBuffer[left].TextureCoordinate = new Vector2(0.0f, 0.5f);
+			var topLeft = new Vector2((float)sourceRect.X / tex.Width, (float)sourceRect.Y / tex.Height);
+			var botRight = new Vector2(((float) sourceRect.X + sourceRect.Width)/tex.Width,
+			                           ((float) sourceRect.Y + sourceRect.Height)/tex.Height);
+			
+			var size = botRight - topLeft;
+			
+			_vertexBuffer[top].TextureCoordinate = new Vector2(topLeft.X + size.X * 0.5f, topLeft.Y); 
+			_vertexBuffer[right].TextureCoordinate = new Vector2(botRight.X, topLeft.Y + size.Y * 0.5f);
+			_vertexBuffer[bottom].TextureCoordinate = new Vector2(topLeft.X + size.X * 0.5f, botRight.Y);
+			_vertexBuffer[left].TextureCoordinate = new Vector2(topLeft.X, topLeft.Y + size.Y * 0.5f);
 
 			//var indices = new short[6] { 0, 1, 2, 2, 3, 0 };
 
@@ -145,7 +153,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		private void Flush()
 		{
 
-			Setup(_hack);
+			Setup();
 
 			for (int i = 0; i < _vertexBuffer.Length; i++) {
 				_vertexBuffer[i].Color = Color.White;
@@ -159,7 +167,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		}
 
-		private void Setup(Texture2D hack)
+		private void Setup()
 		{
 
 			_effect.Projection = _projMatrix;
@@ -167,7 +175,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			_effect.World = Matrix.Identity;
 
 			_effect.TextureEnabled = true;
-			_effect.Texture = hack;
+			_effect.Texture = _activeTexture;
 
 			GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
 
