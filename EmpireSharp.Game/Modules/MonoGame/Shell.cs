@@ -73,7 +73,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 
 			var contentService = (ContentService) IoC.Get<IContentService>();
-			contentService.ContentDirectory = Path.GetFullPath("../../../../Data"); // HACK. TODO: Not hard code this
+			contentService.ContentDirectory = "../../../../Data"; // HACK. TODO: Not hard code this
 			Content.RootDirectory = contentService.ContentDirectory;
 
 			contentService.LoadDatabase();

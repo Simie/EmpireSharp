@@ -7,6 +7,7 @@
 *
 */
 
+using System;
 using Microsoft.Xna.Framework;
 
 namespace EmpireSharp.Game.Modules.MonoGame
@@ -31,12 +32,11 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		{
 
 			_transform = Matrix.Identity;
-			const float scale = 67.7f;
+			float scale = (float)(47 * Math.Sqrt(2));
+			//const float scale = 67f; // This hardcoded value seems to work better than the calculated value, 
 			_transform *= Matrix.CreateScale(scale, scale, 1f);
 			_transform *= _directionTransform;
 			_transform *= Matrix.CreateScale(1.0f, 0.5f, 1);
-			//_transform *= Matrix.CreateScale(48.5f, 24.5f, 1.0f); // Scale by half size of a tile
-
 
 			_inverseTransform = Matrix.Invert(_transform);
 

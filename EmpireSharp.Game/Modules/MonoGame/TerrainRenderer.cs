@@ -27,6 +27,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		private List<Texture2D> _terrainLookup;
 
 		private Texture2D _blank;
+		private Texture2D _test;
 
 		[Inject]
 		public IContentService Content { get; private set; }
@@ -35,7 +36,10 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		public IShell Shell { get; private set; }
 
 		private GraphicsDevice _graphicsDevice;
- 
+
+		public TileBatcher TileBatch;
+
+
 		public void Init(Simulation.Terrain terrain)
 		{
 
@@ -43,6 +47,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			_blank = Content.GetTexture("Assets/Terrain/blank.png");
 
+			_test = Content.GetTexture("Assets/Terrain/test.png");
 			_terrainLookup = new List<Texture2D>();
 
 			for (int i = 0; i < _terrain.TerrainTypes.Count; i++) {
@@ -53,46 +58,58 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			}
 
 			_graphicsDevice = _blank.GraphicsDevice;
+	
+			TileBatch = new TileBatcher(_blank.GraphicsDevice, _test);
 
+			TileBatch.SetTileWidth(97);
 
 		}
 
 		public void Draw(Camera camera)
 		{
 
-			const int tileWidth = 97;
-			const int tileHeight = 49;
+			var proj = Matrix.CreateOrthographicOffCenter
+				(0, _graphicsDevice.Viewport.Width,
+				_graphicsDevice.Viewport.Height, 0,
+				0, 1);
 
-			var sb = ((Shell) Shell).SpriteBatch;
-
-			sb.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.LinearClamp, null, null, null, camera.Transform);
+			TileBatch.Begin(camera.Transform, proj);
 
 			var size = _terrain.Size;
 
-			for (int i = 0; i < _terrain.Size; i++) {
+			for (int i = 0; i < size; i++) {
 
-				for (int j = 0; j < _terrain.Size; j++) {
+				for (int j = 0; j < size; j++) {
 
-					var tile = _terrain.At(i, j);
-					var type = _terrain.TerrainTypes[tile.TypeID];
-
-					var color = Color.FromNonPremultiplied(100 + (i*50)%155, 100 + (j*50)%155, 255, 255);
-
-					int indice = 0;
-
-					Rectangle? sourceRect = TileSourceRect(ref type, i, j, out indice);
-
-					var targetPosition = Translate.SimulationPointToWorld(new Vector2(i, j));
-
-					sb.Draw(_terrainLookup[tile.TypeID], targetPosition, sourceRect, color, 0, new Vector2(tileWidth, 0) * 0.5f, 1, SpriteEffects.None, 0.1f);
-
-					//sb.DrawString(Content.DebugFont, indice.ToString(), new Vector2(targetPosition.X, targetPosition.Y), Color.Black, 0, new Vector2(12, 12), 1, SpriteEffects.None, 1);
+					DrawTile(i, j);
 
 				}
 
 			}
+			
+			TileBatch.End();
 
-			sb.End();
+		}
+
+
+		private void DrawTile(int x, int y)
+		{
+
+			var tile = _terrain.At(x, y);
+			var type = _terrain.TerrainTypes[tile.TypeID];
+
+			var color = Color.FromNonPremultiplied(100 + (x * 50) % 155, 100 + (y * 50) % 155, 255, 255);
+
+			int indice = 0;
+
+			Rectangle? sourceRect = TileSourceRect(ref type, x, y, out indice);
+
+			var targetPosition = Translate.SimulationPointToWorld(new Vector2(x + 0.5f, y + 0.5f));
+
+			//_primitiveBatch.Begin(PrimitiveType.TriangleList);
+
+			TileBatch.DrawTile(null, targetPosition, Rectangle.Empty);
+
 
 		}
 

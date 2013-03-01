@@ -105,7 +105,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 					using (var f = File.OpenRead(path))
 						ret = Texture2D.FromStream(((Shell) Shell).GraphicsDevice, f);
 
-					var mip = new Texture2D(ret.GraphicsDevice, ret.Width, ret.Height, true, ret.Format);
+					/*var mip = new Texture2D(ret.GraphicsDevice, ret.Width, ret.Height, true, ret.Format);
 
 					byte[] data = new byte[mip.Width * mip.Height * 4];
 					ret.GetData(0, ret.Bounds, data, 0, data.Length);
@@ -114,7 +114,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 					ret.Dispose();
 
 					ret = mip;
-
+					*/
 
 				} catch (Exception e) {
 					
