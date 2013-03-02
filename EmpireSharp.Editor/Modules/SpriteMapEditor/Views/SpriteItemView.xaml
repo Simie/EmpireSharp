@@ -19,7 +19,7 @@
             <Image Source="{Binding Source}" />
         </Border>
         
-        <GridSplitter ResizeDirection="Rows" Grid.Row="1" Height="3"></GridSplitter>
+        <GridSplitter ResizeDirection="Auto" Grid.Row="1" Height="3" Width="Auto" Margin="0" Background="#FF836363"></GridSplitter>
         
         <Grid Grid.Row="2">
             

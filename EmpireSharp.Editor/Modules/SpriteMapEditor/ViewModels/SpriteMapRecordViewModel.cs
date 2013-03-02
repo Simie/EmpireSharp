@@ -76,7 +76,7 @@ namespace EmpireSharp.Editor.Modules.SpriteMapEditor.ViewModels
 			MapSource = new BitmapImage(new Uri(assetPath, UriKind.Absolute));
 
 			Items = new BindableCollection<SpriteItemViewModel>(record.Items.Select(p => new SpriteItemViewModel(p, MapSource)));
-			Clips = new BindableCollection<SpriteClipViewModel>(record.Clips.Select(p => new SpriteClipViewModel(p, MapSource)));
+			Clips = new BindableCollection<SpriteClipViewModel>(record.Clips.Select(p => new SpriteClipViewModel(p, this)));
 
 
 		}

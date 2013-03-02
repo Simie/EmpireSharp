@@ -139,6 +139,9 @@
     <Compile Include="Modules\SpriteMapEditor\ViewModels\SpriteItemViewModel.cs" />
     <Compile Include="Modules\SpriteMapEditor\ViewModels\SpriteMapEditorViewModel.cs" />
     <Compile Include="Modules\SpriteMapEditor\ViewModels\SpriteMapRecordViewModel.cs" />
+    <Compile Include="Modules\SpriteMapEditor\Views\SpriteClipView.xaml.cs">
+      <DependentUpon>SpriteClipView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\SpriteMapEditor\Views\SpriteItemView.xaml.cs">
       <DependentUpon>SpriteItemView.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Modules\SpriteMapEditor\Views\SpriteClipView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\SpriteMapEditor\Views\SpriteItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -7,6 +7,7 @@
 *
 */
 using System.Windows.Media;
+using Caliburn.Micro;
 using EmpireSharp.Data;
 
 namespace EmpireSharp.Editor.Modules.SpriteMapEditor.ViewModels
@@ -15,6 +16,7 @@ namespace EmpireSharp.Editor.Modules.SpriteMapEditor.ViewModels
 	{
 
 		private SpriteMap.Clip _clip;
+		private SpriteMapRecordViewModel _map;
 
 		private int _activeItem;
 
@@ -28,10 +30,25 @@ namespace EmpireSharp.Editor.Modules.SpriteMapEditor.ViewModels
 			}
 		}
 
-		public SpriteClipViewModel(SpriteMap.Clip clip, ImageSource map)
+		private Caliburn.Micro.BindableCollection<int> _items;
+
+		public Caliburn.Micro.BindableCollection<int> Items
+		{
+			get { return _items; }
+			set
+			{
+				_items = value;
+				NotifyOfPropertyChange(() => Items);
+			}
+		}
+
+		public SpriteClipViewModel(SpriteMap.Clip clip, SpriteMapRecordViewModel map)
 		{
 
 			_clip = clip;
+			_map = map;
+
+			Items = new BindableCollection<int>(_clip.Items);
 
 		}
 
