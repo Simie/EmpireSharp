@@ -17,6 +17,20 @@ using Ninject;
 namespace EmpireSharp.Simulation
 {
 
+	public class EntityEventArgs : EventArgs
+	{
+
+		public enum Op
+		{
+			Added,
+			Removed
+		}
+
+		public uint EntityID { get; internal set; }
+		public Op Operation { get; internal set; }
+
+	}
+
 	/// <summary>
 	/// Contains a list of all the entities in the simulation.
 	/// </summary>
@@ -36,7 +50,10 @@ namespace EmpireSharp.Simulation
 		private uint _nextEntityID;
 
 		public IList<Entities.BaseEntity> Entities { get { return _internalList.AsReadOnly(); } }
-			
+
+		public event EventHandler<EntityEventArgs> EntityAdded; 
+		public event EventHandler<EntityEventArgs> EntityRemoved; 
+
 		/// <summary>
 		/// Lookup an entity by ID
 		/// </summary>
@@ -50,13 +67,13 @@ namespace EmpireSharp.Simulation
 		[Inject]
 		public IKernel Kernel { get; private set; }
 
-		public EntityContainer()
+		internal EntityContainer()
 		{
 			_internalList = new List<BaseEntity>(1024);
 			_entityLookup = new Dictionary<uint, BaseEntity>(1024);
 		}
 
-		public T CreateEntity<T>() where T : Entities.BaseEntity, new()
+		internal T CreateEntity<T>() where T : Entities.BaseEntity, new()
 		{
 
 			var entity = new T();
@@ -67,6 +84,8 @@ namespace EmpireSharp.Simulation
 			_entityLookup[_nextEntityID] = entity;
 
 			entity.Init();
+
+			OnEntityAdded(entity.EntityID);
 
 			return entity;
 
@@ -79,6 +98,14 @@ namespace EmpireSharp.Simulation
 			for (int i = _internalList.Count-1; i >= 0; --i) {
 				_internalList[i].Tick();
 			}
+
+		}
+
+		protected void OnEntityAdded(uint entID)
+		{
+			
+			if(EntityAdded != null)
+				EntityAdded(this, new EntityEventArgs() { EntityID = entID, Operation = EntityEventArgs.Op.Added });
 
 		}
 

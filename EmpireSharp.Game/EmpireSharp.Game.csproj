@@ -46,6 +46,7 @@
     <Compile Include="Framework\Services\ILog.cs" />
     <Compile Include="Modules\MonoGame\InputManager.cs" />
     <Compile Include="Modules\MonoGame\LogService.cs" />
+    <Compile Include="Modules\MonoGame\Module.cs" />
     <Compile Include="Modules\MonoGame\PrimitiveBatch.cs" />
     <Compile Include="Modules\MonoGame\Shell.cs" />
     <Compile Include="Modules\MonoGame\GameStates\GameStateMain.cs" />

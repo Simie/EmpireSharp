@@ -48,10 +48,6 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			IoC = ioc;
 
-			IoC.Bind<ILog>().To<LogService>().InSingletonScope();
-			IoC.Bind<IContentService>().To<ContentService>().InSingletonScope();
-			IoC.Bind<IInputService>().To<InputManager>().InSingletonScope();
-
 			_inputManager = IoC.Get<IInputService>() as InputManager;
 
 			_graphics = new GraphicsDeviceManager(this);

@@ -8,7 +8,6 @@
 */
 
 using EmpireSharp.Game.Framework.Services;
-using EmpireSharp.Game.Modules.MonoGame;
 using Ninject;
 
 namespace EmpireSharp.Game
@@ -22,11 +21,9 @@ namespace EmpireSharp.Game
 		public Main()
 		{
 
-			IoC = new StandardKernel();
+			IoC = new StandardKernel(new Modules.MonoGame.Module());
 			IoC.Settings.InjectParentPrivateProperties = true;
 			IoC.Settings.InjectNonPublic = true;
-
-			IoC.Bind<IShell>().To<Shell>().InSingletonScope();
 
 		}
 

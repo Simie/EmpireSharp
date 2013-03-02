@@ -9,7 +9,12 @@
 
 namespace EmpireSharp.Game.Modules.MonoGame.View
 {
+
 	public class BaseEntityView
 	{
+
+
+
 	}
+
 }
