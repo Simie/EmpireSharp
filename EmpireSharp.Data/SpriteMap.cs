@@ -27,9 +27,26 @@ namespace EmpireSharp.Data
 		public struct SpriteMapItem
 		{
 
+			[RecordProperty(1)]
 			public string ID { get; set; }
 
+			[RecordProperty(2)]
 			public SpriteRect Rect { get; set; }
+
+		}
+
+		[SubRecord]
+		public struct Clip
+		{
+
+			[RecordProperty(1)]
+			public List<int> Items { get; set; }
+
+			[RecordProperty(2)]
+			public float PlaySpeed { get; set; }
+
+			[RecordProperty(3)]
+			public float RepeatDelay { get; set; }
 
 		}
 
@@ -55,6 +72,11 @@ namespace EmpireSharp.Data
 		{
 			get { return _items; }
 		}
+
+		private List<Clip> _clips = new List<Clip>();
+
+		[RecordProperty(3)]
+		public List<Clip> Clips { get { return _clips; } } 
 
 	}
 

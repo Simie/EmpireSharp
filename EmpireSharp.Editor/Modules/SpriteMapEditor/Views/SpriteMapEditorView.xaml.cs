@@ -6,20 +6,18 @@
 *  EmpireSharp (c) Simon Moles 2013 (www.simonmoles.com)
 *
 */
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Controls;
 
-namespace EmpireSharp.Editor
+namespace EmpireSharp.Editor.Modules.SpriteMapEditor.Views
 {
 	/// <summary>
-	/// Interaction logic for App.xaml
+	/// Interaction logic for SpriteMapEditorView.xaml
 	/// </summary>
-	public partial class App : Application
+	public partial class SpriteMapEditorView : UserControl
 	{
+		public SpriteMapEditorView()
+		{
+			InitializeComponent();
+		}
 	}
 }

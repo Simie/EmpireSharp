@@ -50,6 +50,7 @@
     <Compile Include="Modules\MonoGame\PrimitiveBatch.cs" />
     <Compile Include="Modules\MonoGame\Shell.cs" />
     <Compile Include="Modules\MonoGame\GameStates\GameStateMain.cs" />
+    <Compile Include="Modules\MonoGame\Sprite.cs" />
     <Compile Include="Modules\MonoGame\TileBatcher.cs" />
     <Compile Include="Modules\MonoGame\Translate.cs" />
     <Compile Include="Modules\MonoGame\Vector2Extensions.cs" />
