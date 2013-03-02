@@ -227,7 +227,11 @@ namespace EmpireSharp.Game.Modules.MonoGame
 #endif
 		public static int TileIndice(int x, int y, int mapSize)
 		{
-			return (y % mapSize) + (x % mapSize) * mapSize;
+
+			y = mapSize - (y%mapSize); // AOE2 used opposite y axis
+
+			return ((x % mapSize) + (y % mapSize) * mapSize);
+
 		}
 
 
