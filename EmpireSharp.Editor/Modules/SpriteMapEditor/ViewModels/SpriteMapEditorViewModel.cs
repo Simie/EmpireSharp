@@ -53,8 +53,9 @@ namespace EmpireSharp.Editor.Modules.SpriteMapEditor.ViewModels
 
 		public void Open(SpriteMap map)
 		{
-			
+
 			RecordModel = new SpriteMapRecordViewModel();
+			IoC.BuildUp(RecordModel);
 			RecordModel.Open(map);
 
 			RecordModel.PropertyChanged += RecordModelOnPropertyChanged;

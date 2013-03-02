@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="EmpireSharp.Editor.Modules.SpriteMapEditor.Views.SpriteItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:pt="http://propertytools.codeplex.com"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+
+        <Border Margin="15" BorderBrush="Black" Grid.Row="0">
+            <Image Source="{Binding Source}" />
+        </Border>
+        
+        <GridSplitter ResizeDirection="Rows" Grid.Row="1" Height="3"></GridSplitter>
+        
+        <Grid Grid.Row="2">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <xctk:IntegerUpDown Minimum="0" Width="120" Height="26" Grid.Row="0" Grid.ColumnSpan="2" Value="{Binding Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"></xctk:IntegerUpDown>
+            <xctk:IntegerUpDown Minimum="0" Width="120" Height="26" Grid.Row="1" Grid.Column="0" Value="{Binding Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></xctk:IntegerUpDown>
+            <xctk:IntegerUpDown Minimum="1" Width="120" Height="26" Grid.Row="1" Grid.Column="1" Value="{Binding Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></xctk:IntegerUpDown>
+            <xctk:IntegerUpDown Minimum="1" Width="120" Height="26" Grid.Row="2" Grid.ColumnSpan="2" Value="{Binding Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></xctk:IntegerUpDown>
+            
+        </Grid>
+
+        
+    </Grid>
+</UserControl>
