@@ -56,35 +56,35 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.11\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.12\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ookii.Dialogs.1.0\lib\net35\Ookii.Dialogs.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Papyrus, Version=0.2.0.8, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Papyrus, Version=0.2.0.12, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.11\lib\net35\Papyrus.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.12\lib\net35\Papyrus.dll</HintPath>
     </Reference>
     <Reference Include="Papyrus.Design.Controls, Version=0.2.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.Studio.0.2.0.12\lib\net40\Papyrus.Design.Controls.dll</HintPath>
+      <HintPath>..\packages\Papyrus.Studio.0.2.0.13\lib\net40\Papyrus.Design.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="Papyrus.Studio, Version=0.2.0.12, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Papyrus.Studio, Version=0.2.0.13, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.Studio.0.2.0.12\lib\net40\Papyrus.Studio.dll</HintPath>
+      <HintPath>..\packages\Papyrus.Studio.0.2.0.13\lib\net40\Papyrus.Studio.dll</HintPath>
     </Reference>
     <Reference Include="PropertyTools, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PropertyTools.Wpf.2013.1.12.1\lib\NET45\PropertyTools.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.12\lib\net35\PropertyTools.dll</HintPath>
     </Reference>
     <Reference Include="PropertyTools.Wpf, Version=2013.1.1.1, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.Studio.0.2.0.12\lib\net40\PropertyTools.Wpf.dll</HintPath>
+      <HintPath>..\packages\Papyrus.Studio.0.2.0.13\lib\net40\PropertyTools.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net-patch, Version=2.0.0.480, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.11\lib\net35\protobuf-net-patch.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.12\lib\net35\protobuf-net-patch.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -133,6 +133,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\Controls\SpriteClipReferenceControl\SpriteClipReferenceControl.cs" />
     <Compile Include="Framework\EmpireSharpPropertyControlFactory.cs" />
     <Compile Include="Modules\SpriteMapEditor\EditorProvider.cs" />
     <Compile Include="Modules\SpriteMapEditor\ViewModels\SpriteClipViewModel.cs" />
@@ -188,6 +189,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Framework\Controls\SpriteClipReferenceControl\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Framework\Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\SpriteMapEditor\Views\SpriteClipView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

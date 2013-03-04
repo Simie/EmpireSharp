@@ -45,6 +45,20 @@ namespace EmpireSharp.Data
 			}
 		}
 
+		private SpriteClipReference _spriteClip = new SpriteClipReference();
+
+		[RecordProperty(3)]
+		public SpriteClipReference SpriteClip
+		{
+			get { return _spriteClip; }
+			set
+			{
+				ThrowIfReadOnly("SpriteClip");
+				_spriteClip = value;
+				RaisePropertyChanged("SpriteClip");
+			}
+		}
+
 	}
 
 }

@@ -8,6 +8,8 @@
 */
 
 using System.Windows;
+using System.Windows.Data;
+using EmpireSharp.Editor.Framework.Controls;
 using PropertyTools.Wpf;
 
 namespace EmpireSharp.Editor.Framework
@@ -19,20 +21,25 @@ namespace EmpireSharp.Editor.Framework
 		public override FrameworkElement CreateControl(PropertyItem property, PropertyControlFactoryOptions options)
 		{
 
-			//if (property.ActualPropertyType == typeof (Data.SpriteMap))
-			//	return CreateSpriteEditorControl(property);
+			if (property.ActualPropertyType == typeof (Data.SpriteClipReference))
+				return CreateSpriteClipControl(property);
 			
 			return base.CreateControl(property, options);
 
 		}
 
-		/*public FrameworkElement CreateSpriteEditorControl(PropertyItem item)
+		public FrameworkElement CreateSpriteClipControl(PropertyItem item)
 		{
 
-			var viewModel = Caliburn.Micro.IoC.Get<Modules.SpriteMapEditor.ViewModels.SpriteMapEditorView>();
-			viewModel.op
+			var c = new Controls.SpriteClipReferenceControl();
 
-		}*/
+			var binding = item.CreateBinding();
+			binding.Mode = BindingMode.TwoWay;
+			c.SetBinding(SpriteClipReferenceControl.SpriteClipReferenceProperty, binding);
+
+			return c;
+
+		}
 
 
 

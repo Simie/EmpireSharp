@@ -21,5 +21,12 @@ namespace EmpireSharp.Editor
 	/// </summary>
 	public partial class App : Application
 	{
+
+		public App()
+		{
+			Papyrus.Studio.Framework.PapyrusPropertyControlFactory.FactoryType =
+				typeof (Framework.EmpireSharpPropertyControlFactory);
+		}
+
 	}
 }

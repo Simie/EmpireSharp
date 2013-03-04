@@ -40,12 +40,15 @@ namespace EmpireSharp.Data
 		{
 
 			[RecordProperty(1)]
-			public List<int> Items { get; set; }
+			public string Key { get; set; }
 
 			[RecordProperty(2)]
-			public float PlaySpeed { get; set; }
+			public List<int> Items { get; set; }
 
 			[RecordProperty(3)]
+			public float PlaySpeed { get; set; }
+
+			[RecordProperty(4)]
 			public float RepeatDelay { get; set; }
 
 		}
