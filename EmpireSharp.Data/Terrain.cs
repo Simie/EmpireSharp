@@ -18,19 +18,19 @@ namespace EmpireSharp.Data
 	public class Terrain : EmpireRecord
 	{
 
-		private RecordReference<SpriteMap> _spriteMap = RecordReference<SpriteMap>.Empty;
+		private SpriteClipReference _terrainClip = new SpriteClipReference();
 
 		[RecordProperty(1)]
 		[Category("Graphics")]
-		[Description("Sprite map containing tiles for this terrain.")]
-		public RecordReference<SpriteMap> SpriteMap
+		[Description("Sprite clip containing tiles for this terrain.")]
+		public SpriteClipReference TerrainClip
 		{
-			get { return _spriteMap; }
+			get { return _terrainClip; }
 			set
 			{
-				ThrowIfReadOnly("SpriteMap");
-				_spriteMap = value;
-				RaisePropertyChanged("SpriteMap");
+				ThrowIfReadOnly("TerrainClip");
+				_terrainClip = value;
+				RaisePropertyChanged("TerrainClip");
 			}
 		}
 

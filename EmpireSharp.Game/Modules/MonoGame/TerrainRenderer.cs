@@ -61,7 +61,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			for (int i = 0; i < _terrain.TerrainTypes.Count; i++) {
 
 				var t = _terrain.TerrainTypes[i];
-				_terrainLookup.Add(Content.GetTexture(t.SpriteMap.Value.AssetPath));
+				_terrainLookup.Add(Content.GetTexture(t.TerrainClip.SpriteMap.Value.AssetPath));
 
 			}
 
@@ -208,15 +208,15 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		public Rectangle TileSourceRect(ref EmpireSharp.Data.Terrain type, int x, int y, out int indice)
 		{
 
-			var spriteMap = type.SpriteMap.Value;
+			var terrain = type;
+			var spriteMap = type.TerrainClip.SpriteMap.Value;
 
 			indice = TileIndice(x, y, type.MapSize);
 
-			var s = indice.ToString();
-			var tile = spriteMap.Items.FirstOrDefault(p => p.ID == s);
 
-			if (tile.ID == null)
-				return Rectangle.Empty;
+			var clip = spriteMap.Clips.FirstOrDefault(p => p.Key == terrain.TerrainClip.ClipKey);
+
+			var tile = spriteMap.Items[clip.Items[indice]];
 
 			return new Rectangle(tile.Rect.X, tile.Rect.Y, tile.Rect.Width, tile.Rect.Height);
 

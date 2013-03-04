@@ -28,9 +28,6 @@ namespace EmpireSharp.Data
 		{
 
 			[RecordProperty(1)]
-			public string ID { get; set; }
-
-			[RecordProperty(2)]
 			public SpriteRect Rect { get; set; }
 
 		}

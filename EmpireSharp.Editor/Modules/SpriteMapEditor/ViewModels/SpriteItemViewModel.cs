@@ -136,7 +136,7 @@ namespace EmpireSharp.Editor.Modules.SpriteMapEditor.ViewModels
 
 		public override string ToString()
 		{
-			return Item.ID;
+			return base.ToString();
 		}
 
 		private void UpdateSource()

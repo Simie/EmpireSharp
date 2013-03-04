@@ -6,6 +6,13 @@
     "Name": "Test Unit",
     "MoveSpeed": {
       "FixedValue": 0
+    },
+    "SpriteClip": {
+      "SpriteMap": {
+        "Index": 0,
+        "Source": ""
+      },
+      "ClipKey": ""
     }
   }
 }
