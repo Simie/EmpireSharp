@@ -134,7 +134,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		protected override void Draw(GameTime gameTime)
 		{
 
-			MainGameState.Draw();
+			MainGameState.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
 			base.Draw(gameTime);
 
 		}

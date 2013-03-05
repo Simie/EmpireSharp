@@ -30,6 +30,9 @@ namespace EmpireSharp.Data
 			[RecordProperty(1)]
 			public SpriteRect Rect { get; set; }
 
+			[RecordProperty(2)]
+			public Papyrus.DataTypes.IntSize Origin { get; set; }
+
 		}
 
 		[SubRecord]

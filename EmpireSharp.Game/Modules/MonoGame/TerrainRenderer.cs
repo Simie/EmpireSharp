@@ -84,7 +84,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 			// For culling, ignore camera zoom.
 			var zoom = camera.Zoom;
-			camera.Zoom = 1;
+			//camera.Zoom = 1;
 
 			var topLeft = camera.TransformScreenToWorld(new Vector2(0,0));
 			var bottomRight = camera.TransformScreenToWorld(new Vector2(_graphicsDevice.Viewport.Width, _graphicsDevice.Viewport.Height));

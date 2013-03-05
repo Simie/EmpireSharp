@@ -44,6 +44,7 @@
     <Compile Include="Modules\MonoGame\BasicShapes.cs" />
     <Compile Include="Modules\MonoGame\Camera.cs" />
     <Compile Include="Framework\Services\ILog.cs" />
+    <Compile Include="Modules\MonoGame\DataExtensions.cs" />
     <Compile Include="Modules\MonoGame\InputManager.cs" />
     <Compile Include="Modules\MonoGame\LogService.cs" />
     <Compile Include="Modules\MonoGame\Module.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Modules\MonoGame\Shell.cs" />
     <Compile Include="Modules\MonoGame\GameStates\GameStateMain.cs" />
     <Compile Include="Modules\MonoGame\Sprite.cs" />
+    <Compile Include="Modules\MonoGame\SpriteContainer.cs" />
     <Compile Include="Modules\MonoGame\TileBatcher.cs" />
     <Compile Include="Modules\MonoGame\Translate.cs" />
     <Compile Include="Modules\MonoGame\Vector2Extensions.cs" />

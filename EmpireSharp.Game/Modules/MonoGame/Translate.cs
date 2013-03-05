@@ -63,5 +63,15 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			return Vector2.Transform(vec, _inverseDirectionTransform);
 		}
 
+		public static float WorldRotationToSimulation(float rot)
+		{
+			return MathHelper.WrapAngle(rot - MathHelper.PiOver4);
+		}
+
+		public static float SimulationRotationToWorld(float rot)
+		{
+			return MathHelper.WrapAngle(rot + MathHelper.PiOver4);
+		}
+
 	}
 }

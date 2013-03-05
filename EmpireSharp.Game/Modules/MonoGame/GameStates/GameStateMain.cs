@@ -41,6 +41,8 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 		[Inject]
 		IInputService Input { get; set; }
 
+		private SpriteContainer _spriteContainer;
+
 		private Vector2 _mouseSimPos;
 
 		private float _targetZoom;
@@ -54,6 +56,10 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			_terrainRenderer = ioc.Get<TerrainRenderer>();
 			_terrainRenderer.Init(_simulation.Terrain);
+
+			// HACK: TODO: Inject graphics device in a less broken way
+			_spriteContainer = new SpriteContainer(_terrainRenderer.TileBatch.GraphicsDevice);
+			
 
 			_camera = new Camera();
 			_camera.Zoom = 1;
@@ -133,7 +139,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 		}
 
-		public void Draw()
+		public void Draw(float dt)
 		{
 
 			var game = Shell as Shell;
@@ -141,6 +147,8 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 			game.GraphicsDevice.Clear(Color.Black);
 
 			_terrainRenderer.Draw(_camera);
+
+			_spriteContainer.Draw(_camera, dt);
 
 			var entities = _simulation.EntityContainer.Entities;
 
