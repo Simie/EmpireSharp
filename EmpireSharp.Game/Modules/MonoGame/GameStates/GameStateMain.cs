@@ -8,6 +8,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using EmpireSharp.Game.Framework.Services;
 using EmpireSharp.Simulation;
 using EmpireSharp.Simulation.Commands;
@@ -47,6 +48,8 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 		private float _targetZoom;
 
+		Dictionary<BaseEntity,Sprite> _sprites = new Dictionary<BaseEntity, Sprite>();
+			
 		[Inject]
 		public GameStateMain(IContentService content, IKernel ioc)
 		{
@@ -59,7 +62,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			// HACK: TODO: Inject graphics device in a less broken way
 			_spriteContainer = new SpriteContainer(_terrainRenderer.TileBatch.GraphicsDevice);
-			
+			ioc.Inject(_spriteContainer);
 
 			_camera = new Camera();
 			_camera.Zoom = 1;
@@ -152,25 +155,40 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 			var entities = _simulation.EntityContainer.Entities;
 
-			game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null, _camera.Transform);
+			//game.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null, _camera.Transform);
 
 			foreach (var baseEntity in entities) {
 
+				if (!_sprites.ContainsKey(baseEntity)) {
+
+					var sprite = new Sprite();
+					_sprites[baseEntity] = sprite;
+
+					_spriteContainer.AddSprite(sprite);
+
+				}
+
 				if (baseEntity is Unit) {
+
+					var sprite = _sprites[baseEntity];
 
 					var unit = baseEntity as Unit;
 
-					var pos = new Vector2((float)unit.Transform.Position.X, (float)unit.Transform.Position.Y);
+					//sprite.SetClip(unit.);
+					sprite.SimPosition = unit.Transform.Position.ToVector2();
+					sprite.SimRotation = (float)unit.Transform.Rotation;
+
+					/*var pos = new Vector2((float)unit.Transform.Position.X, (float)unit.Transform.Position.Y);
 
 					pos = Translate.SimulationPointToWorld(pos);
 
 					game.SpriteBatch.Draw(game.WhitePixelTex, pos, new Rectangle(0, 0, 16, 32),
-					                      Color.Red, 0, new Vector2(8, 30), 1.0f, SpriteEffects.None, 0);
+					                      Color.Red, 0, new Vector2(8, 30), 1.0f, SpriteEffects.None, 0);*/
 
 				}
 			}
 
-			game.SpriteBatch.End();
+			//game.SpriteBatch.End();
 
 			var entity0 = entities[0] as Unit;
 

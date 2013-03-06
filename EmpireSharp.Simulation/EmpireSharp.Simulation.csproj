@@ -34,22 +34,22 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.12\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.13\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="Papyrus, Version=0.2.0.12, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Papyrus, Version=0.2.0.13, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.12\lib\net35\Papyrus.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.13\lib\net35\Papyrus.dll</HintPath>
     </Reference>
     <Reference Include="PropertyTools, Version=0.0.0.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.12\lib\net35\PropertyTools.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.13\lib\net35\PropertyTools.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net-patch, Version=2.0.0.480, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Papyrus.0.2.0.12\lib\net35\protobuf-net-patch.dll</HintPath>
+      <HintPath>..\packages\Papyrus.0.2.0.13\lib\net35\protobuf-net-patch.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -8,14 +8,19 @@
 */
 
 using System.Collections.Generic;
+using EmpireSharp.Data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Ninject;
 
 namespace EmpireSharp.Game.Modules.MonoGame
 {
 
 	public class SpriteContainer
 	{
+
+		[Inject]
+		Framework.Services.IContentService Content { get; set; }
 
 		private LinkedList<Sprite> _sprites;
 
@@ -26,8 +31,12 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		private Texture2D _errorPx;
 
+		private Dictionary<SpriteMap, Texture2D> _textureCache; 
+
 		public SpriteContainer(GraphicsDevice graphicsDevice)
 		{
+
+			_textureCache = new Dictionary<SpriteMap, Texture2D>();
 
 			_sprites = new LinkedList<Sprite>();
 			_culledBatch = new List<Sprite>();
@@ -59,7 +68,16 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 
 			foreach (var sprite in _sprites) {
+
 				sprite.Update(dt);
+
+				if(sprite.SpriteMap == null)
+					continue;
+
+				if (!_textureCache.ContainsKey(sprite.SpriteMap)) {
+					_textureCache[sprite.SpriteMap] = Content.GetTexture(sprite.SpriteMap.AssetPath);
+				}
+
 			}
 
 			RefreshVisible(camera);
@@ -70,7 +88,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 				var sprite = _culledBatch[i];
 
-				_batch.Draw(_errorPx, Translate.SimulationPointToWorld(sprite.SimPosition), sprite.ActiveItem.Rect.ToRectangle(),
+				_batch.Draw(_textureCache[sprite.SpriteMap], Translate.SimulationPointToWorld(sprite.SimPosition), sprite.ActiveItem.Rect.ToRectangle(),
 					  Color.Red, Translate.SimulationRotationToWorld(sprite.SimRotation), new Vector2(sprite.ActiveItem.Origin.Width, sprite.ActiveItem.Origin.Height), 1.0f, SpriteEffects.None, 0);
 			}
 
@@ -99,6 +117,9 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			_culledBatch.Clear();
 
 			foreach (var sprite in _sprites) {
+
+				if(sprite.SpriteMap == null)
+					continue;
 
 				sprite.WorldRect.Intersects(ref cullingRect, out result);
 

@@ -1,0 +1,32 @@
+﻿{
+  "Location": "Test Data",
+  "Index": 1,
+  "Record": {
+    "ID": "map_archer_test",
+    "AssetPath": "Assets\\Sprites\\test.png",
+    "Items": [
+      {
+        "Rect": {
+          "X": 0,
+          "Y": 0,
+          "Width": 49,
+          "Height": 43
+        },
+        "Origin": {
+          "Width": 0,
+          "Height": 0
+        }
+      }
+    ],
+    "Clips": [
+      {
+        "Key": "archer_walking",
+        "Items": [
+          0
+        ],
+        "PlaySpeed": 0.1,
+        "RepeatDelay": 0.0
+      }
+    ]
+  }
+}

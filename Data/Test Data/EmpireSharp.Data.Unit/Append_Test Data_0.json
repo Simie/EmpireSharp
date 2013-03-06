@@ -5,14 +5,14 @@
     "ID": "unit_test",
     "Name": "Test Unit",
     "MoveSpeed": {
-      "FixedValue": 0
+      "FixedValue": 262144
     },
     "SpriteClip": {
       "SpriteMap": {
-        "Index": 0,
-        "Source": ""
+        "Index": 1,
+        "Source": "Test Data"
       },
-      "ClipKey": ""
+      "ClipKey": "archer_walking"
     }
   }
 }

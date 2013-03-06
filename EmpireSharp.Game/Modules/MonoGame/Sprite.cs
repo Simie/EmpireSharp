@@ -59,6 +59,11 @@ namespace EmpireSharp.Game.Modules.MonoGame
 		internal void Update(float dt)
 		{
 
+			if (SpriteMap == null) {
+
+				return;
+			}
+
 			_elapsedTime += dt;
 
 			if (_elapsedTime > _totalTime)

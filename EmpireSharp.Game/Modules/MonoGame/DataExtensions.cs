@@ -15,9 +15,12 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		public static Microsoft.Xna.Framework.Rectangle ToRectangle(this Data.SpriteMap.SpriteRect rect)
 		{
-
 			return new Microsoft.Xna.Framework.Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+		}
 
+		public static Microsoft.Xna.Framework.Vector2 ToVector2(this Simulation.FixedVector2 vec)
+		{
+			return new Microsoft.Xna.Framework.Vector2((float) vec.X, (float) vec.Y);
 		}
 
 	}
