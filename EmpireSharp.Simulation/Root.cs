@@ -80,11 +80,13 @@ namespace EmpireSharp.Simulation
 			{
 				var u = EntityContainer.CreateEntity<Unit>();
 				u.Transform.Position = new FixedVector2(10, 15);
+				u.Data = data.GetRecordsOfType<Data.Unit>()[0];
 			}
 
 			{
 				var u = EntityContainer.CreateEntity<Unit>();
 				u.Transform.Position = new FixedVector2(20, 15);
+				u.Data = data.GetRecordsOfType<Data.Unit>()[0];
 			}
 
 			IsInitialised = true;

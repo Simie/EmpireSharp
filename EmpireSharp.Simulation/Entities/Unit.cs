@@ -37,6 +37,8 @@ namespace EmpireSharp.Simulation.Entities
 
 		#endregion
 
+		public Data.Unit Data { get; internal set; }
+
 		/// <summary>
 		/// Active behaviour applied to this unit.
 		/// </summary>

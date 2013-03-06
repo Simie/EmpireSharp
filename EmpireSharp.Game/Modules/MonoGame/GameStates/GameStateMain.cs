@@ -174,7 +174,7 @@ namespace EmpireSharp.Game.Modules.MonoGame.GameStates
 
 					var unit = baseEntity as Unit;
 
-					//sprite.SetClip(unit.);
+					sprite.SetClip(unit.Data.SpriteClip);
 					sprite.SimPosition = unit.Transform.Position.ToVector2();
 					sprite.SimRotation = (float)unit.Transform.Rotation;
 

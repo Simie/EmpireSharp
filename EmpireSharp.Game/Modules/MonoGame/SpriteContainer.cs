@@ -89,7 +89,7 @@ namespace EmpireSharp.Game.Modules.MonoGame
 				var sprite = _culledBatch[i];
 
 				_batch.Draw(_textureCache[sprite.SpriteMap], Translate.SimulationPointToWorld(sprite.SimPosition), sprite.ActiveItem.Rect.ToRectangle(),
-					  Color.Red, Translate.SimulationRotationToWorld(sprite.SimRotation), new Vector2(sprite.ActiveItem.Origin.Width, sprite.ActiveItem.Origin.Height), 1.0f, SpriteEffects.None, 0);
+					  Color.Red, 0, new Vector2(sprite.ActiveItem.Origin.Width, sprite.ActiveItem.Origin.Height), 1.0f, SpriteEffects.None, 0);
 			}
 
 			_batch.End();
