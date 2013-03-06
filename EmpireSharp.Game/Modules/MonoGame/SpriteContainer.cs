@@ -31,7 +31,12 @@ namespace EmpireSharp.Game.Modules.MonoGame
 
 		private Texture2D _errorPx;
 
-		private Dictionary<SpriteMap, Texture2D> _textureCache; 
+		private Dictionary<SpriteMap, Texture2D> _textureCache;
+
+		/// <summary>
+		/// Number of sprites rendered in the last draw call
+		/// </summary>
+		public int SpriteRenderCount { get; private set; }
 
 		public SpriteContainer(GraphicsDevice graphicsDevice)
 		{
@@ -93,6 +98,8 @@ namespace EmpireSharp.Game.Modules.MonoGame
 			}
 
 			_batch.End();
+
+			SpriteRenderCount = _culledBatch.Count;
 
 
 		}
